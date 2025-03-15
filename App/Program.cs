@@ -1,3 +1,5 @@
+using Extensoes;
+using Microsoft.AspNetCore.Mvc;
 using ModuloUsuario.Api;
 using ModuloUsuario.Infra.Base;
 
@@ -19,6 +21,27 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//Retorna os erros no padrão da ResponseModel
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var erros = context.ModelState.Values
+            .SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage)
+            .ToList();
+
+        var response = new PadraoRespostasApi<object>
+        {
+            Dados = erros,
+            Mensagem = "Erro de validação",
+            HttpStatusCode = System.Net.HttpStatusCode.BadRequest
+        };
+
+        return new BadRequestObjectResult(response);
+    };
+});
 
 builder.Services.AddModuloUsuario(app.Configuration);
 app.ExecutaMigrationsModuloUsuario();
