@@ -10,5 +10,8 @@ namespace ModuloUsuario.Infra.Banco
     public class ConfiguracaoContextoBancoModuloUsuario : DbContext
     {
         public ConfiguracaoContextoBancoModuloUsuario(DbContextOptions<ConfiguracaoContextoBancoModuloUsuario> options) : base(options) { }
+
+        public DbSet<Entidades.Usuario> Usuarios { get; set; }
+        public DbSet<Entidades.Credenciais> Credenciais { get; set; }
     }
 }
