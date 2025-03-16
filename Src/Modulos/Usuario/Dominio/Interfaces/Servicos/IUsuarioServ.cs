@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModuloUsuario.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace ModuloUsuario.Dominio.Interfaces.Servicos
 {
-    internal interface IUsuarioServ
+    public interface IUsuarioServ
     {
+        Task<Usuario> CriarUsuario(Usuario usuario);
+        Task<Usuario> BuscarUsuarioPorId(int id);
     }
 }
