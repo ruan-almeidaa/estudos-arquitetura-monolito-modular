@@ -1,4 +1,7 @@
-﻿using ModuloUsuario.Dominio.Interfaces.Repositorios;
+﻿using Microsoft.EntityFrameworkCore;
+using ModuloUsuario.Dominio.Interfaces.Repositorios;
+using ModuloUsuario.Entidades;
+using ModuloUsuario.Infra.Banco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +12,26 @@ namespace ModuloUsuario.Infra.Repositorios
 {
     public class UsuarioRepo : IUsuarioRepo
     {
-        public Task<bool> VerificaEmailExiste(string email)
+        private readonly ConfiguracaoContextoBancoModuloUsuario _contexto;
+        public UsuarioRepo(ConfiguracaoContextoBancoModuloUsuario contexto)
         {
-            throw new NotImplementedException();
+            _contexto = contexto;
+        }
+
+        public async Task<Usuario> BuscarUsuarioPorId(int id)
+        {
+            return await _contexto.Usuarios
+                .Include(c => c.Credenciais)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<Usuario> CriarUsuario(Usuario usuario)
+        {
+            await _contexto.Usuarios.AddAsync(usuario);
+            await _contexto.SaveChangesAsync();
+            return await BuscarUsuarioPorId(usuario.Id);
+
         }
     }
 }

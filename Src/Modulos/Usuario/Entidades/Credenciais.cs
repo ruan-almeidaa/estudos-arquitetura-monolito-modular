@@ -12,6 +12,5 @@ namespace ModuloUsuario.Entidades
         public required int UsuarioId { get; set; }
         public required string Email { get; set; }
         public required string Senha { get; set; }
-        public required Usuario Usuario { get; set; }
     }
 }
