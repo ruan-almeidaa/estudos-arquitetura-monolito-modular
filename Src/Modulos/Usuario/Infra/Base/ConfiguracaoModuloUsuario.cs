@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ModuloUsuario.Auxiliares.Validacoes;
 using ModuloUsuario.Infra.Banco;
 
 namespace ModuloUsuario.Infra.Base
@@ -12,6 +14,8 @@ namespace ModuloUsuario.Infra.Base
         {
             services.AddDbContext<ConfiguracaoContextoBancoModuloUsuario>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConexaoBd")));
+
+            services.AddValidatorsFromAssemblyContaining<ValidaUsuarioCriarDto>();
 
             return services;
         }
