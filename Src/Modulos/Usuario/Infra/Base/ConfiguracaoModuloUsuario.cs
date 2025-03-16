@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ModuloUsuario.Auxiliares;
 using ModuloUsuario.Auxiliares.Validacoes;
 using ModuloUsuario.Dominio.Interfaces.Repositorios;
 using ModuloUsuario.Dominio.Interfaces.Servicos;
@@ -32,6 +33,10 @@ namespace ModuloUsuario.Infra.Base
             //Validações automáticas do módulo, através do FluentValidation
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<ValidaUsuarioCriarDto>();
+
+            //Mapemanto automático com AutoMapper
+            services.AddAutoMapper(typeof(Mapeamentos));
+
 
 
             return services;
