@@ -6,22 +6,11 @@ using ModuloUsuario.Infra.Base;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(UsuarioController).Assembly);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 //Retorna os erros no padrão da ResponseModel
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
@@ -43,7 +32,18 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     };
 });
 
-builder.Services.AddModuloUsuario(app.Configuration);
+builder.Services.AddModuloUsuario(builder.Configuration);
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+
 app.ExecutaMigrationsModuloUsuario();
 
 app.UseHttpsRedirection();

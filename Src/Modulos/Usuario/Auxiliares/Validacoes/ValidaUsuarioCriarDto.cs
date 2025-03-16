@@ -12,9 +12,19 @@ namespace ModuloUsuario.Auxiliares.Validacoes
     {
         public ValidaUsuarioCriarDto()
         {
-            RuleFor(x => x.Nome).NotEmpty().WithMessage(Mensagens.Usuario.NomeObrigatorio);
-            RuleFor(x => x.Email).NotEmpty().WithMessage(Mensagens.Credenciais.EmailObrigatorio);
-            RuleFor(x => x.Senha).NotEmpty().WithMessage(Mensagens.Credenciais.SenhaObrigatoria);
+            RuleFor(x => x.Nome)
+                .NotEmpty().WithMessage(Mensagens.Usuario.NomeObrigatorio)
+                .Length(4, 50).WithMessage(Mensagens.Usuario.NomeTamanho)
+                .Matches(@"^[a-zA-ZÀ-ÿ\s]+$").WithMessage(Mensagens.Usuario.NomeFormato);
+
+            RuleFor(x => x.Email)
+                .NotEmpty().WithMessage(Mensagens.Credenciais.EmailObrigatorio)
+                .EmailAddress().WithMessage(Mensagens.Credenciais.EmailInvalido);
+
+
+            RuleFor(x => x.Senha)
+                .Length(10, 50).WithMessage(Mensagens.Credenciais.SenhaTamanho)
+                .NotEmpty().WithMessage(Mensagens.Credenciais.SenhaObrigatoria);
         }
     }
 }

@@ -1,10 +1,15 @@
 ﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModuloUsuario.Auxiliares.Validacoes;
+using ModuloUsuario.Dominio.Interfaces.Repositorios;
+using ModuloUsuario.Dominio.Interfaces.Servicos;
+using ModuloUsuario.Dominio.Servicos;
 using ModuloUsuario.Infra.Banco;
+using ModuloUsuario.Infra.Repositorios;
 
 namespace ModuloUsuario.Infra.Base
 {
@@ -15,7 +20,19 @@ namespace ModuloUsuario.Infra.Base
             services.AddDbContext<ConfiguracaoContextoBancoModuloUsuario>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConexaoBd")));
 
+            //Serviços que irão implementar as interfaces do módulo
+            services.AddScoped<IOrquestrador, Orquestrador>();
+            services.AddScoped<ICredenciaisServ, CredenciaisServ>();
+            services.AddScoped<IUsuarioServ, UsuarioServ>();
+
+            //Repositórios que irão implementar as interfaces do módulo
+            services.AddScoped<ICredenciaisRepo, CredenciaisRepo>();
+            services.AddScoped<IUsuarioRepo, UsuarioRepo>();
+
+            //Validações automáticas do módulo, através do FluentValidation
+            services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<ValidaUsuarioCriarDto>();
+
 
             return services;
         }
