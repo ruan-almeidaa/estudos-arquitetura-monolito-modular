@@ -13,6 +13,7 @@ namespace ModuloUsuario.Auxiliares
             public const string NomeObrigatorio = "Nome é obrigatório.";
             public const string NomeTamanho = "O nome deve ter entre 4 e 50 caracteres.";
             public const string NomeFormato = "O nome deve conter apenas letras e espaços.";
+            public const string UsuarioCriado = "Usuário criado com sucesso.";
 
         }
 

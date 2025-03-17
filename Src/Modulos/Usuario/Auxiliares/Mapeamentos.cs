@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using ModuloUsuario.Dtos.Entrada;
+using ModuloUsuario.Dtos.Saida;
+using ModuloUsuario.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +12,10 @@ namespace ModuloUsuario.Auxiliares
 {
     public class Mapeamentos : Profile
     {
+        public Mapeamentos() 
+        {
+            CreateMap<Usuario, UsuarioAutenticadoDto>();
+            CreateMap<UsuarioCriarDto, Usuario>();
+        }
     }
 }
