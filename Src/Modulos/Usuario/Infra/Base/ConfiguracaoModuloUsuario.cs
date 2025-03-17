@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using ModuloUsuario.Auxiliares;
 using ModuloUsuario.Auxiliares.Validacoes;
 using ModuloUsuario.Dominio.Interfaces.Repositorios;
@@ -11,6 +13,7 @@ using ModuloUsuario.Dominio.Interfaces.Servicos;
 using ModuloUsuario.Dominio.Servicos;
 using ModuloUsuario.Infra.Banco;
 using ModuloUsuario.Infra.Repositorios;
+using System.Text;
 
 namespace ModuloUsuario.Infra.Base
 {
@@ -36,6 +39,23 @@ namespace ModuloUsuario.Infra.Base
 
             //Mapemanto automático com AutoMapper
             services.AddAutoMapper(typeof(Mapeamentos));
+
+            // Configuração de autenticação JWT dentro do módulo
+            var key = Encoding.ASCII.GetBytes(configuration["Jwt:Secret"]);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
 
 

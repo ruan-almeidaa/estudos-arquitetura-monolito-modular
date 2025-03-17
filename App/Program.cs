@@ -47,7 +47,7 @@ if (app.Environment.IsDevelopment())
 app.ExecutaMigrationsModuloUsuario();
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
