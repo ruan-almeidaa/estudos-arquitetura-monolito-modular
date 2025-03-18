@@ -16,6 +16,12 @@ namespace ModuloUsuario.Dominio.Servicos
         {
             _usuarioRepo = usuarioRepo;
         }
+
+        public async Task<List<Usuario>> BuscarTodosUsuarios()
+        {
+            return await _usuarioRepo.BuscarTodosUsuarios();
+        }
+
         public async Task<Usuario> BuscarUsuarioPorId(int id)
         {
            return await _usuarioRepo.BuscarUsuarioPorId(id);
@@ -24,6 +30,18 @@ namespace ModuloUsuario.Dominio.Servicos
         public async Task<Usuario> CriarUsuario(Usuario usuario)
         {
             return await _usuarioRepo.CriarUsuario(usuario);
+        }
+
+        public Task<Usuario> EditarUsuario(Usuario usuario)
+        {
+            return _usuarioRepo.EditarUsuario(usuario);
+        }
+
+        public async Task<bool> ExcluirUsuario(int idUsuario)
+        {
+            Usuario usuario = await _usuarioRepo.BuscarUsuarioPorId(idUsuario);
+
+            return usuario != null ? await _usuarioRepo.ExcluirUsuario(usuario) : false;
         }
     }
 }
