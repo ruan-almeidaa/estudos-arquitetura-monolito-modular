@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ModuloUsuario.Dtos.Entrada;
+using ModuloUsuario.Dtos.Entrada.Usuario;
 using ModuloUsuario.Dtos.Saida;
 using ModuloUsuario.Entidades;
 using System;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloUsuario.Dtos.Entrada
+namespace ModuloUsuario.Dtos.Entrada.Usuario
 {
     public class UsuarioCriarDto
     {

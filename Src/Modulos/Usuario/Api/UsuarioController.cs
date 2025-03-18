@@ -1,7 +1,7 @@
 ﻿using Extensoes;
 using Microsoft.AspNetCore.Mvc;
 using ModuloUsuario.Dominio.Interfaces.Servicos;
-using ModuloUsuario.Dtos.Entrada;
+using ModuloUsuario.Dtos.Entrada.Usuario;
 using ModuloUsuario.Dtos.Saida;
 using System;
 using System.Collections.Generic;

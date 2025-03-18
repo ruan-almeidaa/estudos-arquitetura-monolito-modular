@@ -2,7 +2,7 @@
 using Extensoes;
 using ModuloUsuario.Auxiliares;
 using ModuloUsuario.Dominio.Interfaces.Servicos;
-using ModuloUsuario.Dtos.Entrada;
+using ModuloUsuario.Dtos.Entrada.Usuario;
 using ModuloUsuario.Dtos.Saida;
 using ModuloUsuario.Entidades;
 using System;

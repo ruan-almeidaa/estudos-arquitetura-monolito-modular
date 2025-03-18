@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ModuloUsuario.Dtos.Entrada;
+using ModuloUsuario.Dtos.Entrada.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
