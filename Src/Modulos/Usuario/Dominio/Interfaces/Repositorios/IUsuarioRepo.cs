@@ -11,5 +11,8 @@ namespace ModuloUsuario.Dominio.Interfaces.Repositorios
     {
         Task<Usuario> CriarUsuario(Usuario usuario);
         Task<Usuario> BuscarUsuarioPorId(int id);
+        Task<Usuario> EditarUsuario(Usuario usuario);
+        Task<bool> ExcluirUsuario(Usuario usuario);
+        Task<List<Usuario>> BuscarTodosUsuarios();
     }
 }

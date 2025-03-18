@@ -18,6 +18,14 @@ namespace ModuloUsuario.Infra.Repositorios
             _contexto = contexto;
         }
 
+        public Task<List<Usuario>> BuscarTodosUsuarios()
+        {
+            return _contexto.Usuarios
+                .Include(c => c.Credenciais)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<Usuario> BuscarUsuarioPorId(int id)
         {
             return await _contexto.Usuarios
@@ -32,6 +40,21 @@ namespace ModuloUsuario.Infra.Repositorios
             await _contexto.SaveChangesAsync();
             return await BuscarUsuarioPorId(usuario.Id);
 
+        }
+
+        public async Task<Usuario> EditarUsuario(Usuario usuario)
+        {
+            _contexto.ChangeTracker.Clear();
+            _contexto.Usuarios.Update(usuario);
+            await _contexto.SaveChangesAsync();
+            return await BuscarUsuarioPorId (usuario.Id);
+        }
+
+        public async Task<bool> ExcluirUsuario(Usuario usuario)
+        {
+            _contexto.Usuarios.Remove(usuario);
+            int qtdRegistrosExcluidos = await _contexto.SaveChangesAsync();
+            return qtdRegistrosExcluidos > 0;
         }
     }
 }
