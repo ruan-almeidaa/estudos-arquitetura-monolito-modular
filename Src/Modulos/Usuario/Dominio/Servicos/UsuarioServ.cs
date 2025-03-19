@@ -1,4 +1,5 @@
-﻿using ModuloUsuario.Dominio.Interfaces.Repositorios;
+﻿using Extensoes;
+using ModuloUsuario.Dominio.Interfaces.Repositorios;
 using ModuloUsuario.Dominio.Interfaces.Servicos;
 using ModuloUsuario.Entidades;
 using System;
@@ -29,6 +30,8 @@ namespace ModuloUsuario.Dominio.Servicos
 
         public async Task<Usuario> CriarUsuario(Usuario usuario)
         {
+            usuario.DataCadastro = DateOnly.FromDateTime(DateTime.Now);
+            usuario.Credenciais.Senha = Criptografia.GerarHash(usuario.Credenciais.Senha);
             return await _usuarioRepo.CriarUsuario(usuario);
         }
 

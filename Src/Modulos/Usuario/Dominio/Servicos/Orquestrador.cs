@@ -29,11 +29,8 @@ namespace ModuloUsuario.Dominio.Servicos
             bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioCriarDto.Credenciais.Email);
             if(emailExiste) return PadraoRespostasApi<UsuarioAutenticadoDto>.CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.EmailJaCadastrado, System.Net.HttpStatusCode.BadRequest);
 
-            Usuario usuarioParaCriar = _mapper.Map<Usuario>(usuarioCriarDto);
-            usuarioParaCriar.DataCadastro = DateOnly.FromDateTime(DateTime.Now);
 
-
-            Usuario usuarioCriado = await _usuarioServ.CriarUsuario(usuarioParaCriar);
+            Usuario usuarioCriado = await _usuarioServ.CriarUsuario(_mapper.Map<Usuario>(usuarioCriarDto));
             UsuarioAutenticadoDto usuarioAutenticadoDto = _mapper.Map<UsuarioAutenticadoDto>(usuarioCriado);
 
             return PadraoRespostasApi<UsuarioAutenticadoDto>
