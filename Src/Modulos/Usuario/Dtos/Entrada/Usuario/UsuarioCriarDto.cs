@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModuloUsuario.Dtos.Entrada.Credenciais;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,6 @@ namespace ModuloUsuario.Dtos.Entrada.Usuario
     public class UsuarioCriarDto
     {
         public required string Nome { get; set; }
-        public required string Email { get; set; }
-        public required string Senha { get; set; }
+        public required CredenciaisCriarDto Credenciais { get; set; }
     }
 }

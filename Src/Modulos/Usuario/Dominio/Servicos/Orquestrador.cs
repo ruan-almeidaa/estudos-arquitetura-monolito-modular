@@ -26,7 +26,7 @@ namespace ModuloUsuario.Dominio.Servicos
         }
         public async Task<PadraoRespostasApi<UsuarioAutenticadoDto>> CriarUsuario(UsuarioCriarDto usuarioCriarDto)
         {
-            bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioCriarDto.Email);
+            bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioCriarDto.Credenciais.Email);
             if(emailExiste) return PadraoRespostasApi<UsuarioAutenticadoDto>.CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.EmailJaCadastrado, System.Net.HttpStatusCode.BadRequest);
 
             Usuario usuarioParaCriar = _mapper.Map<Usuario>(usuarioCriarDto);

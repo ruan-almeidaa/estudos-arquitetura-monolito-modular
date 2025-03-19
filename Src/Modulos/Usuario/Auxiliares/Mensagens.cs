@@ -19,6 +19,8 @@ namespace ModuloUsuario.Auxiliares
 
         public static class Credenciais
         {
+            public const string CredenciaisObrigatorias = "Credenciais são obrigatórias.";
+
             public const string EmailObrigatorio = "E-mail é obrigatório.";
             public const string EmailNaoCadastrado = "E-mail não cadastrado.";
             public const string EmailJaCadastrado = "E-mail já cadastrado.";

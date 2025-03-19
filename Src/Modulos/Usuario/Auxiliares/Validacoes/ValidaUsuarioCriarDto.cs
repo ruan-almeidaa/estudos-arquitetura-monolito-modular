@@ -17,14 +17,11 @@ namespace ModuloUsuario.Auxiliares.Validacoes
                 .Length(4, 50).WithMessage(Mensagens.Usuario.NomeTamanho)
                 .Matches(@"^[a-zA-ZÀ-ÿ\s]+$").WithMessage(Mensagens.Usuario.NomeFormato);
 
-            RuleFor(x => x.Email)
-                .NotEmpty().WithMessage(Mensagens.Credenciais.EmailObrigatorio)
-                .EmailAddress().WithMessage(Mensagens.Credenciais.EmailInvalido);
+            RuleFor(x => x.Credenciais)
+                .NotNull().WithMessage(Mensagens.Credenciais.CredenciaisObrigatorias)
+                .SetValidator(new ValidaCredenciaisCriarDto());
 
 
-            RuleFor(x => x.Senha)
-                .Length(10, 50).WithMessage(Mensagens.Credenciais.SenhaTamanho)
-                .NotEmpty().WithMessage(Mensagens.Credenciais.SenhaObrigatoria);
         }
     }
 }
