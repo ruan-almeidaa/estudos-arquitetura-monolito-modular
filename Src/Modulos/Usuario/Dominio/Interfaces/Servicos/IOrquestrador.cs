@@ -1,6 +1,6 @@
 ﻿using Extensoes;
 using ModuloUsuario.Dtos.Entrada.Usuario;
-using ModuloUsuario.Dtos.Saida;
+using ModuloUsuario.Dtos.Saida.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Linq;

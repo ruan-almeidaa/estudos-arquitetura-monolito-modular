@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using ModuloUsuario.Dtos.Entrada.Credenciais;
 using ModuloUsuario.Dtos.Entrada.Usuario;
-using ModuloUsuario.Dtos.Saida;
+using ModuloUsuario.Dtos.Saida.Credenciais;
+using ModuloUsuario.Dtos.Saida.Usuario;
 using ModuloUsuario.Entidades;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace ModuloUsuario.Auxiliares
             CreateMap<UsuarioCriarDto, Usuario>();
 
             CreateMap<CredenciaisCriarDto,  Credenciais>();
+            CreateMap<Credenciais, CredenciaisDto>();
         }
     }
 }

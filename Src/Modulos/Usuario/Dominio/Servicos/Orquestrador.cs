@@ -3,7 +3,7 @@ using Extensoes;
 using ModuloUsuario.Auxiliares;
 using ModuloUsuario.Dominio.Interfaces.Servicos;
 using ModuloUsuario.Dtos.Entrada.Usuario;
-using ModuloUsuario.Dtos.Saida;
+using ModuloUsuario.Dtos.Saida.Usuario;
 using ModuloUsuario.Entidades;
 using System;
 using System.Collections.Generic;
