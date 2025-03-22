@@ -9,5 +9,6 @@ namespace ModuloUsuario.Dominio.Interfaces.Repositorios
     public interface ICredenciaisRepo
     {
         Task<bool> VerificaEmailExiste(string email);
+        Task<bool> ExisteEmailSenha(string email, string senha);
     }
 }

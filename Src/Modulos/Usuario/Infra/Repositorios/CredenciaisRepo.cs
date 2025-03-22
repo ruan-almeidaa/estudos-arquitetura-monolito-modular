@@ -18,6 +18,13 @@ namespace ModuloUsuario.Infra.Repositorios
             _contexto = contexto;
         }
 
+        public async Task<bool> ExisteEmailSenha(string email, string senha)
+        {
+            return await _contexto.Credenciais
+                .AsNoTracking()
+                .AnyAsync(c => c.Email == email && c.Senha == senha);
+        }
+
         public async Task<bool> VerificaEmailExiste(string email)
         {
             return await _contexto.Credenciais
