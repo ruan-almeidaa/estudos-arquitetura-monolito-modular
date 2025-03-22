@@ -18,6 +18,15 @@ namespace ModuloUsuario.Infra.Repositorios
             _contexto = contexto;
         }
 
+        public async Task<int> BuscarIdUsuarioPorEmail(string email)
+        {
+           return await _contexto.Credenciais
+                .AsNoTracking()
+                .Where(c => c.Email == email)
+                .Select(c => c.UsuarioId)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<bool> ExisteEmailSenha(string email, string senha)
         {
             return await _contexto.Credenciais
