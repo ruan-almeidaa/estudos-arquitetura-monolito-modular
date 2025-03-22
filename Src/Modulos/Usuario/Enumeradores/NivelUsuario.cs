@@ -10,8 +10,8 @@ namespace ModuloUsuario.Enumeradores
     public enum NivelUsuario
     {
         [Description("Normal")]
-        Normal = 1,
+        Normal = 0,
         [Description("Administrador ")]
-        Administrador = 2
+        Administrador = 1
     }
 }
