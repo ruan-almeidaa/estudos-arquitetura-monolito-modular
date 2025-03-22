@@ -52,6 +52,8 @@ namespace ModuloUsuario.Dominio.Servicos
             Usuario usuarioCriado = await _usuarioServ.CriarUsuario(_mapper.Map<Usuario>(usuarioCriarDto));
             UsuarioAutenticadoDto usuarioAutenticadoDto = _mapper.Map<UsuarioAutenticadoDto>(usuarioCriado);
 
+            usuarioAutenticadoDto.Token = await _usuarioServ.GerarToken(usuarioCriado);
+
             return PadraoRespostasApi<UsuarioAutenticadoDto>
                 .CriarResposta<UsuarioAutenticadoDto>(usuarioAutenticadoDto, Mensagens.Usuario.UsuarioCriado, System.Net.HttpStatusCode.Created);
         }
