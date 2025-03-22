@@ -40,25 +40,6 @@ namespace ModuloUsuario.Infra.Base
             //Mapemanto automático com AutoMapper
             services.AddAutoMapper(typeof(Mapeamentos));
 
-            // Configuração de autenticação JWT dentro do módulo
-            var key = Encoding.ASCII.GetBytes(configuration["Jwt:Secret"]);
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
-
-
-
             return services;
         }
 
