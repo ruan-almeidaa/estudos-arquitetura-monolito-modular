@@ -12,5 +12,6 @@ namespace ModuloUsuario.Dominio.Interfaces.Servicos
     public interface IOrquestrador
     {
         Task<PadraoRespostasApi<UsuarioAutenticadoDto>> CriarUsuario(UsuarioCriarDto usuarioCriarDto);
+        Task<PadraoRespostasApi<UsuarioAutenticadoDto>> AutenticarUsuario(UsuarioAutenticarDto usuarioAutenticarDto);
     }
 }

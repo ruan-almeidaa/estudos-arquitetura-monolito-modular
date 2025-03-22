@@ -14,5 +14,6 @@ namespace ModuloUsuario.Dominio.Interfaces.Servicos
         Task<Usuario> EditarUsuario(Usuario usuario);
         Task<bool> ExcluirUsuario(int idUsuario);
         Task<List<Usuario>> BuscarTodosUsuarios();
+        Task<string> GerarToken(Usuario usuario);
     }
 }

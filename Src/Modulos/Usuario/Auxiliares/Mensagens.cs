@@ -20,6 +20,7 @@ namespace ModuloUsuario.Auxiliares
         public static class Credenciais
         {
             public const string CredenciaisObrigatorias = "Credenciais são obrigatórias.";
+            public const string Autenticado = "Autenticado com sucesso.";
 
             public const string EmailObrigatorio = "E-mail é obrigatório.";
             public const string EmailNaoCadastrado = "E-mail não cadastrado.";
@@ -31,6 +32,12 @@ namespace ModuloUsuario.Auxiliares
             public const string SenhaObrigatoria = "Senha é obrigatória.";
             public const string SenhaTamanho = "A senha deve ter entre 6 e 20 caracteres.";
         }
+
+        public static class Token
+        {
+            public const string SecretObrigatorio = "A chave JWT não foi configurada corretamente.";
+            public const string SecretTamanho = "A secret parametrizada precisa ter no mínimo 32 caracteres.";
+        } 
 
     }
 }

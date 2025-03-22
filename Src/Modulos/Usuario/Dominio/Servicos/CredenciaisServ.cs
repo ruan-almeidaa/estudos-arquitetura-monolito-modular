@@ -1,4 +1,5 @@
-﻿using ModuloUsuario.Dominio.Interfaces.Repositorios;
+﻿using Extensoes;
+using ModuloUsuario.Dominio.Interfaces.Repositorios;
 using ModuloUsuario.Dominio.Interfaces.Servicos;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,18 @@ namespace ModuloUsuario.Dominio.Servicos
         {
             _credenciaisRepo = credenciaisRepo;
         }
+
+        public async Task<int> BuscarIdUsuarioPorEmail(string email)
+        {
+            return await _credenciaisRepo.BuscarIdUsuarioPorEmail(email);
+        }
+
+        public async Task<bool> ExisteEmailSenha(string email, string senha)
+        {
+            senha = Criptografia.GerarHash(senha);
+            return await _credenciaisRepo.ExisteEmailSenha(email, senha);
+        }
+
         public async Task<bool> VerificaEmailExiste(string email)
         {
             return await _credenciaisRepo.VerificaEmailExiste(email);

@@ -24,6 +24,25 @@ namespace ModuloUsuario.Dominio.Servicos
             _usuarioServ = usuarioServ;
             _mapper = mapper;
         }
+
+        public async Task<PadraoRespostasApi<UsuarioAutenticadoDto>> AutenticarUsuario(UsuarioAutenticarDto usuarioAutenticarDto)
+        {
+            bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioAutenticarDto.Email);
+            if (!emailExiste) return PadraoRespostasApi<UsuarioAutenticadoDto>.CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.EmailInvalido, System.Net.HttpStatusCode.BadRequest);
+
+            bool credenciaisValidas = await _credenciaisServ.ExisteEmailSenha(usuarioAutenticarDto.Email, usuarioAutenticarDto.Senha);
+            if (!credenciaisValidas) return PadraoRespostasApi<UsuarioAutenticadoDto>.CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.SenhaIncorreta, System.Net.HttpStatusCode.BadRequest);
+
+            Usuario usuario = await _usuarioServ.BuscarUsuarioPorId(await _credenciaisServ.BuscarIdUsuarioPorEmail(usuarioAutenticarDto.Email));
+            UsuarioAutenticadoDto usuarioAutenticadoDto = _mapper.Map<UsuarioAutenticadoDto>(usuario);
+
+            usuarioAutenticadoDto.Token = await _usuarioServ.GerarToken(usuario);
+
+            return PadraoRespostasApi<UsuarioAutenticadoDto>
+                .CriarResposta<UsuarioAutenticadoDto>(usuarioAutenticadoDto, Mensagens.Credenciais.Autenticado, System.Net.HttpStatusCode.OK);
+
+        }
+
         public async Task<PadraoRespostasApi<UsuarioAutenticadoDto>> CriarUsuario(UsuarioCriarDto usuarioCriarDto)
         {
             bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioCriarDto.Credenciais.Email);
