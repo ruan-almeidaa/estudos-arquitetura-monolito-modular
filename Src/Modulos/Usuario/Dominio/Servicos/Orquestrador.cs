@@ -48,8 +48,7 @@ namespace ModuloUsuario.Dominio.Servicos
         public async Task<PadraoRespostasApi<UsuarioAutenticadoDto>> CriarUsuario(UsuarioCriarDto usuarioCriarDto)
         {
             bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioCriarDto.Credenciais.Email);
-            if(emailExiste) return PadraoRespostasApi<UsuarioAutenticadoDto>
-                    .CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.EmailJaCadastrado, System.Net.HttpStatusCode.BadRequest);
+            if(emailExiste) throw new InvalidOperationException(Mensagens.Credenciais.EmailJaCadastrado);
 
 
             Usuario usuarioCriado = await _usuarioServ.CriarUsuario(_mapper.Map<Usuario>(usuarioCriarDto));
