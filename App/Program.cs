@@ -70,8 +70,6 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddModuloUsuario(builder.Configuration);
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -81,10 +79,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-
-
 app.ExecutaMigrationsModuloUsuario();
+app.UseMiddleware<ExcecaoMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
