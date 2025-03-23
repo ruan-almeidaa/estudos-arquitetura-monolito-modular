@@ -28,10 +28,12 @@ namespace ModuloUsuario.Dominio.Servicos
         public async Task<PadraoRespostasApi<UsuarioAutenticadoDto>> AutenticarUsuario(UsuarioAutenticarDto usuarioAutenticarDto)
         {
             bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioAutenticarDto.Email);
-            if (!emailExiste) return PadraoRespostasApi<UsuarioAutenticadoDto>.CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.EmailInvalido, System.Net.HttpStatusCode.BadRequest);
+            if (!emailExiste) return PadraoRespostasApi<UsuarioAutenticadoDto>
+                    .CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.EmailInvalido, System.Net.HttpStatusCode.BadRequest);
 
             bool credenciaisValidas = await _credenciaisServ.ExisteEmailSenha(usuarioAutenticarDto.Email, usuarioAutenticarDto.Senha);
-            if (!credenciaisValidas) return PadraoRespostasApi<UsuarioAutenticadoDto>.CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.SenhaIncorreta, System.Net.HttpStatusCode.BadRequest);
+            if (!credenciaisValidas) return PadraoRespostasApi<UsuarioAutenticadoDto>
+                    .CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.SenhaIncorreta, System.Net.HttpStatusCode.BadRequest);
 
             Usuario usuario = await _usuarioServ.BuscarUsuarioPorId(await _credenciaisServ.BuscarIdUsuarioPorEmail(usuarioAutenticarDto.Email));
             UsuarioAutenticadoDto usuarioAutenticadoDto = _mapper.Map<UsuarioAutenticadoDto>(usuario);
@@ -46,7 +48,8 @@ namespace ModuloUsuario.Dominio.Servicos
         public async Task<PadraoRespostasApi<UsuarioAutenticadoDto>> CriarUsuario(UsuarioCriarDto usuarioCriarDto)
         {
             bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioCriarDto.Credenciais.Email);
-            if(emailExiste) return PadraoRespostasApi<UsuarioAutenticadoDto>.CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.EmailJaCadastrado, System.Net.HttpStatusCode.BadRequest);
+            if(emailExiste) return PadraoRespostasApi<UsuarioAutenticadoDto>
+                    .CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Credenciais.EmailJaCadastrado, System.Net.HttpStatusCode.BadRequest);
 
 
             Usuario usuarioCriado = await _usuarioServ.CriarUsuario(_mapper.Map<Usuario>(usuarioCriarDto));
@@ -56,6 +59,45 @@ namespace ModuloUsuario.Dominio.Servicos
 
             return PadraoRespostasApi<UsuarioAutenticadoDto>
                 .CriarResposta<UsuarioAutenticadoDto>(usuarioAutenticadoDto, Mensagens.Usuario.UsuarioCriado, System.Net.HttpStatusCode.Created);
+        }
+
+        public async Task<PadraoRespostasApi<UsuarioAutenticadoDto>> EditarUsuario(UsuarioEditarDto usuarioEditarDto)
+        {
+            Usuario usuarioAntesDeEditar = await _usuarioServ.BuscarUsuarioPorId(usuarioEditarDto.Id);
+
+            bool alterouEmail = usuarioAntesDeEditar.Credenciais.Email != usuarioEditarDto.Credenciais.Email;
+            if (alterouEmail)
+            {
+                bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioEditarDto.Credenciais.Email);
+                if (emailExiste) throw new InvalidOperationException(Mensagens.Credenciais.EmailJaCadastrado);
+
+            }
+
+            Credenciais credenciaisAntesDeEditar = new()
+            {
+                Id = usuarioAntesDeEditar.Credenciais.Id,
+                Email = usuarioEditarDto.Credenciais.Email,
+                Senha = usuarioAntesDeEditar.Credenciais.Senha,
+                UsuarioId = usuarioAntesDeEditar.Id
+            };
+
+            Usuario usuarioEditado = new()
+            {
+                Id = usuarioEditarDto.Id,
+                Nome = usuarioEditarDto.Nome,
+                NivelUsuario = usuarioAntesDeEditar.NivelUsuario,
+                DataCadastro = usuarioAntesDeEditar.DataCadastro,
+                Credenciais = credenciaisAntesDeEditar
+            };
+
+            await _usuarioServ.EditarUsuario(usuarioEditado);
+
+            UsuarioAutenticadoDto usuarioAutenticadoDto = _mapper.Map<UsuarioAutenticadoDto>(usuarioEditado);
+            usuarioAutenticadoDto.Token = await _usuarioServ.GerarToken(usuarioEditado);
+
+            return PadraoRespostasApi<UsuarioAutenticadoDto>
+                .CriarResposta<UsuarioAutenticadoDto>(usuarioAutenticadoDto, Mensagens.Usuario.UsuarioEditado, System.Net.HttpStatusCode.OK);
+
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ModuloUsuario.Enumeradores
     {
         [Description("Normal")]
         Normal = 0,
-        [Description("Administrador ")]
+        [Description("Administrador")]
         Administrador = 1
     }
 }

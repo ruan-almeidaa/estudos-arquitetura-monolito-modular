@@ -1,14 +1,14 @@
 ﻿using Extensoes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModuloUsuario.Dominio.Interfaces.Servicos;
 using ModuloUsuario.Dtos.Entrada.Usuario;
 using ModuloUsuario.Dtos.Saida.Usuario;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.ConstrainedExecution;
+using ModuloUsuario.Auxiliares;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace ModuloUsuario.Api
 {
@@ -48,6 +48,30 @@ namespace ModuloUsuario.Api
                     .CriarResposta<UsuarioAutenticadoDto>(null, $"Ocorreu um erro: {ex.Message}", System.Net.HttpStatusCode.InternalServerError));
             }
         }
+
+        [HttpPut("Editar")]
+        [Authorize]
+        public async Task<ActionResult<PadraoRespostasApi<UsuarioAutenticadoDto>>> EditarUsuario([FromBody] UsuarioEditarDto usuarioEditarDto)
+        {
+            try
+            {
+                int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
+                if (idUsuarioToken != usuarioEditarDto.Id && direitoUsuarioToken != "Administrador") 
+                    return StatusCode(500, PadraoRespostasApi<UsuarioAutenticadoDto>
+                        .CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Usuario.UsuarioNaoAutorizado, System.Net.HttpStatusCode.Forbidden));
+
+
+                return await _orquestrador.EditarUsuario(usuarioEditarDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, PadraoRespostasApi<UsuarioAutenticadoDto>
+                    .CriarResposta<UsuarioAutenticadoDto>(null, $"Ocorreu um erro: {ex.Message}", System.Net.HttpStatusCode.InternalServerError));
+            }
+        }
+
 
     }
 }
