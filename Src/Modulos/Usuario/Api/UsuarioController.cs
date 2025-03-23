@@ -25,51 +25,27 @@ namespace ModuloUsuario.Api
         [HttpPost("Criar")]
         public async Task<ActionResult<PadraoRespostasApi<UsuarioAutenticadoDto>>> CriarUsuario([FromBody] UsuarioCriarDto usuarioCriarDto)
         {
-            try
-            {
-                return await _orquestrador.CriarUsuario(usuarioCriarDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, PadraoRespostasApi<UsuarioAutenticadoDto>
-                    .CriarResposta<UsuarioAutenticadoDto>(null, $"Ocorreu um erro: {ex.Message}", System.Net.HttpStatusCode.InternalServerError));
-            }
+            return await _orquestrador.CriarUsuario(usuarioCriarDto);
         }
         [HttpPost("Autenticar")]
         public async Task<ActionResult<PadraoRespostasApi<UsuarioAutenticadoDto>>> AutenticarUsuario([FromBody] UsuarioAutenticarDto usuarioAutenticarDto)
         {
-            try
-            {
-                return await _orquestrador.AutenticarUsuario(usuarioAutenticarDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, PadraoRespostasApi<UsuarioAutenticadoDto>
-                    .CriarResposta<UsuarioAutenticadoDto>(null, $"Ocorreu um erro: {ex.Message}", System.Net.HttpStatusCode.InternalServerError));
-            }
+            return await _orquestrador.AutenticarUsuario(usuarioAutenticarDto);
         }
 
         [HttpPut("Editar")]
         [Authorize]
         public async Task<ActionResult<PadraoRespostasApi<UsuarioAutenticadoDto>>> EditarUsuario([FromBody] UsuarioEditarDto usuarioEditarDto)
         {
-            try
-            {
-                int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-                string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
-                if (idUsuarioToken != usuarioEditarDto.Id && direitoUsuarioToken != "Administrador") 
-                    return StatusCode(500, PadraoRespostasApi<UsuarioAutenticadoDto>
-                        .CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Usuario.UsuarioNaoAutorizado, System.Net.HttpStatusCode.Forbidden));
-
-
-                return await _orquestrador.EditarUsuario(usuarioEditarDto);
-            }
-            catch (Exception ex)
-            {
+            string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
+            if (idUsuarioToken != usuarioEditarDto.Id && direitoUsuarioToken != "Administrador") 
                 return StatusCode(500, PadraoRespostasApi<UsuarioAutenticadoDto>
-                    .CriarResposta<UsuarioAutenticadoDto>(null, $"Ocorreu um erro: {ex.Message}", System.Net.HttpStatusCode.InternalServerError));
-            }
+                    .CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Usuario.UsuarioNaoAutorizado, System.Net.HttpStatusCode.Forbidden));
+
+
+            return await _orquestrador.EditarUsuario(usuarioEditarDto);
         }
 
 
