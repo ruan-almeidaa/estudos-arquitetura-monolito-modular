@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ModuloUsuario.Auxiliares;
-using ModuloUsuario.Auxiliares.Validacoes;
+using ModuloUsuario.Auxiliares.Validacoes.Usuario;
 using ModuloUsuario.Dominio.Interfaces.Repositorios;
 using ModuloUsuario.Dominio.Interfaces.Servicos;
 using ModuloUsuario.Dominio.Servicos;

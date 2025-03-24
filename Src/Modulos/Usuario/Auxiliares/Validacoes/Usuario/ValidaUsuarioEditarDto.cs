@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ModuloUsuario.Auxiliares.Validacoes.Credenciais;
 using ModuloUsuario.Dtos.Entrada.Usuario;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloUsuario.Auxiliares.Validacoes
+namespace ModuloUsuario.Auxiliares.Validacoes.Usuario
 {
     public class ValidaUsuarioEditarDto : AbstractValidator<UsuarioEditarDto>
     {
