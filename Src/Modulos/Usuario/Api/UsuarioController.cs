@@ -38,11 +38,8 @@ namespace ModuloUsuario.Api
         public async Task<ActionResult<PadraoRespostasApi<UsuarioAutenticadoDto>>> EditarUsuario([FromBody] UsuarioEditarDto usuarioEditarDto)
         {
             int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
             string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
-            if (idUsuarioToken != usuarioEditarDto.Id && direitoUsuarioToken != "Administrador") 
-                return StatusCode(500, PadraoRespostasApi<UsuarioAutenticadoDto>
-                    .CriarResposta<UsuarioAutenticadoDto>(null, Mensagens.Usuario.UsuarioNaoAutorizado, System.Net.HttpStatusCode.Forbidden));
+            ValidaAcessoRota.ValidarAcessoRota(idUsuarioToken, usuarioEditarDto.Id, direitoUsuarioToken, true);
 
 
             return await _orquestrador.EditarUsuario(usuarioEditarDto);
@@ -53,10 +50,7 @@ namespace ModuloUsuario.Api
         {
             int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
-            if (idUsuarioToken != idUsuario && direitoUsuarioToken != "Administrador")
-                return StatusCode(500, PadraoRespostasApi<bool>
-                    .CriarResposta<bool>(false, Mensagens.Usuario.UsuarioNaoAutorizado, System.Net.HttpStatusCode.Forbidden));
-
+            ValidaAcessoRota.ValidarAcessoRota(idUsuarioToken, idUsuario, direitoUsuarioToken, true);
             return await _orquestrador.ExcluirUsuario(idUsuario);
         }
 
