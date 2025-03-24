@@ -98,5 +98,13 @@ namespace ModuloUsuario.Dominio.Servicos
                 .CriarResposta<UsuarioAutenticadoDto>(usuarioAutenticadoDto, Mensagens.Usuario.UsuarioEditado, System.Net.HttpStatusCode.OK);
 
         }
+
+        public async Task<PadraoRespostasApi<bool>> ExcluirUsuario(int idUsuario)
+        {
+            bool excluiuUsuario = await _usuarioServ.ExcluirUsuario(idUsuario);
+
+            if (excluiuUsuario) return PadraoRespostasApi<bool>.CriarResposta<bool>(true, Mensagens.Usuario.UsuarioExcluido, System.Net.HttpStatusCode.OK);
+            throw new InvalidOperationException(Mensagens.Usuario.UsuarioNaoExcluido);
+        }
     }
 }

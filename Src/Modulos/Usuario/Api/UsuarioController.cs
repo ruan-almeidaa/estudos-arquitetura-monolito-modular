@@ -47,6 +47,18 @@ namespace ModuloUsuario.Api
 
             return await _orquestrador.EditarUsuario(usuarioEditarDto);
         }
+        [HttpDelete("Excluir/{idUsuario}")]
+        [Authorize]
+        public async Task<ActionResult<PadraoRespostasApi<bool>>> ExcluirUsuario([FromRoute] int idUsuario)
+        {
+            int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
+            if (idUsuarioToken != idUsuario && direitoUsuarioToken != "Administrador")
+                return StatusCode(500, PadraoRespostasApi<bool>
+                    .CriarResposta<bool>(false, Mensagens.Usuario.UsuarioNaoAutorizado, System.Net.HttpStatusCode.Forbidden));
+
+            return await _orquestrador.ExcluirUsuario(idUsuario);
+        }
 
 
     }

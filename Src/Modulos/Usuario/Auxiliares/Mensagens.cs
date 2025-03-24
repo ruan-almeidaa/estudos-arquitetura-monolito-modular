@@ -16,6 +16,8 @@ namespace ModuloUsuario.Auxiliares
             public const string UsuarioCriado = "Usuário criado com sucesso."; 
             public const string UsuarioEditado = "Usuário editado com sucesso.";
             public const string UsuarioNaoAutorizado = "Usuário não autorizado.";
+            public const string UsuarioExcluido = "Usuário excluído com sucesso.";
+            public const string UsuarioNaoExcluido = "Usuário não excluído.";
 
         }
 
