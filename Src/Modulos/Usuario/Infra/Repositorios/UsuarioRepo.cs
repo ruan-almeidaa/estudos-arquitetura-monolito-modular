@@ -18,11 +18,14 @@ namespace ModuloUsuario.Infra.Repositorios
             _contexto = contexto;
         }
 
-        public Task<List<Usuario>> BuscarTodosUsuarios()
+        public Task<List<Usuario>> BuscarTodosUsuarios(int numeroPagina, int totalItens)
         {
             return _contexto.Usuarios
-                .Include(c => c.Credenciais)
+                .Include(u => u.Credenciais)
                 .AsNoTracking()
+                .OrderBy(u => u.Id)
+                .Skip((numeroPagina - 1) * totalItens) // Pula os registros das páginas anteriores
+                .Take(totalItens) // Pega apenas os registros da página atual
                 .ToListAsync();
         }
 
@@ -32,6 +35,11 @@ namespace ModuloUsuario.Infra.Repositorios
                 .Include(c => c.Credenciais)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<int> ContarUsuarios()
+        {
+            return await _contexto.Usuarios.CountAsync();
         }
 
         public async Task<Usuario> CriarUsuario(Usuario usuario)

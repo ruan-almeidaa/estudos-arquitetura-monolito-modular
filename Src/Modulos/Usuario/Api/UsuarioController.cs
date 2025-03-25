@@ -53,6 +53,12 @@ namespace ModuloUsuario.Api
             ValidaAcessoRota.ValidarAcessoRota(idUsuarioToken, idUsuario, direitoUsuarioToken, true);
             return await _orquestrador.ExcluirUsuario(idUsuario);
         }
+        [Authorize(Roles = "Administrador")]
+        [HttpGet("BuscarTodos")]
+        public async Task<ActionResult<PadraoRespostasApi<Paginacao<UsuarioDetalhadoDto>>>> BuscarTodosUsuarios([FromQuery] int numeroPagina, [FromQuery] int totalItens)
+        {
+            return await _orquestrador.BuscarTodosUsuarios(numeroPagina, totalItens);
+        }
 
 
     }

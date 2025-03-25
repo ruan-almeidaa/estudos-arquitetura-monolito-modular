@@ -18,6 +18,7 @@ namespace ModuloUsuario.Auxiliares
             public const string UsuarioNaoAutorizado = "Usuário não autorizado.";
             public const string UsuarioExcluido = "Usuário excluído com sucesso.";
             public const string UsuarioNaoExcluido = "Usuário não excluído.";
+            public const string UsuariosEncontrados = "Lista de usuários retornada com sucesso.";
 
         }
 

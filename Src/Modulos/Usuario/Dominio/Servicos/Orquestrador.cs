@@ -45,6 +45,27 @@ namespace ModuloUsuario.Dominio.Servicos
 
         }
 
+        public async Task<PadraoRespostasApi<Paginacao<UsuarioDetalhadoDto>>> BuscarTodosUsuarios(int numeroPagina, int totalItens)
+        {
+            List<Usuario> usuarios = await _usuarioServ.BuscarTodosUsuarios(numeroPagina, totalItens);
+            List<UsuarioDetalhadoDto> usuariosDetalhadosDto = usuarios
+                .Select(_mapper.Map<UsuarioDetalhadoDto>)
+                .ToList();
+
+            int totalRegistros = await _usuarioServ.ContarUsuarios();
+
+            Paginacao<UsuarioDetalhadoDto> paginacao = new() 
+            {
+                Itens = usuariosDetalhadosDto,
+                TotalItensParaExibir = totalRegistros,
+                NumeroPaginaAtual = numeroPagina,
+                TotalPaginasParaExibir = (int)Math.Ceiling((double)totalRegistros / totalItens)
+            };
+
+            return PadraoRespostasApi<Paginacao<UsuarioDetalhadoDto>>
+                .CriarResposta<Paginacao<UsuarioDetalhadoDto>>(paginacao, Mensagens.Usuario.UsuariosEncontrados, System.Net.HttpStatusCode.OK);
+        }
+
         public async Task<PadraoRespostasApi<UsuarioAutenticadoDto>> CriarUsuario(UsuarioCriarDto usuarioCriarDto)
         {
             bool emailExiste = await _credenciaisServ.VerificaEmailExiste(usuarioCriarDto.Credenciais.Email);

@@ -26,14 +26,19 @@ namespace ModuloUsuario.Dominio.Servicos
             _config = configuration;
         }
 
-        public async Task<List<Usuario>> BuscarTodosUsuarios()
+        public async Task<List<Usuario>> BuscarTodosUsuarios(int numeroPagina, int totalItens)
         {
-            return await _usuarioRepo.BuscarTodosUsuarios();
+            return await _usuarioRepo.BuscarTodosUsuarios(numeroPagina, totalItens);
         }
 
         public async Task<Usuario> BuscarUsuarioPorId(int id)
         {
            return await _usuarioRepo.BuscarUsuarioPorId(id);
+        }
+
+        public async Task<int> ContarUsuarios()
+        {
+            return await _usuarioRepo.ContarUsuarios();
         }
 
         public async Task<Usuario> CriarUsuario(Usuario usuario)

@@ -13,6 +13,7 @@ namespace ModuloUsuario.Dominio.Interfaces.Repositorios
         Task<Usuario> BuscarUsuarioPorId(int id);
         Task<Usuario> EditarUsuario(Usuario usuario);
         Task<bool> ExcluirUsuario(Usuario usuario);
-        Task<List<Usuario>> BuscarTodosUsuarios();
+        Task<List<Usuario>> BuscarTodosUsuarios(int numeroPagina, int totalItens);
+        Task<int> ContarUsuarios();
     }
 }

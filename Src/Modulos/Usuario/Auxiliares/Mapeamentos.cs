@@ -18,6 +18,7 @@ namespace ModuloUsuario.Auxiliares
         {
             CreateMap<Usuario, UsuarioAutenticadoDto>();
             CreateMap<UsuarioCriarDto, Usuario>();
+            CreateMap<Usuario, UsuarioDetalhadoDto>();
 
             CreateMap<CredenciaisCriarDto,  Credenciais>();
             CreateMap<Credenciais, CredenciaisDto>();
