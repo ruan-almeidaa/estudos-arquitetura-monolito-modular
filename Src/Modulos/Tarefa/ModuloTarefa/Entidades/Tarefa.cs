@@ -15,7 +15,7 @@ namespace ModuloTarefa.Entidades
         public required string Descricao { get; set; }
         public required DateTime DataCriacao { get; set; }
         public DateTime? DataConclusao { get; set; }
-        public required int UsuarioId { get; set; }
+        public int? UsuarioId { get; set; }
         public required StatusTarefa Status { get; set; } = StatusTarefa.Pendente;
     }
 }
