@@ -32,7 +32,6 @@
 	  <Folder Include="Dominio\Interfaces\Servicos\" />
 	  <Folder Include="Dominio\Servicos\" />
 	  <Folder Include="Dtos\" />
-	  <Folder Include="Infra\Base\" />
 	</ItemGroup>
 
 </Project>

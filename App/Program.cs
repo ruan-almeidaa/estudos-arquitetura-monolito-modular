@@ -1,11 +1,10 @@
 using Extensoes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using ModuloUsuario.Api;
 using ModuloUsuario.Infra.Base;
+using ModuloTarefa.Infra.Base;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,6 +68,7 @@ builder.Services.AddAuthentication(options =>
 
 
 builder.Services.AddModuloUsuario(builder.Configuration);
+builder.Services.AddModuloTarefa(builder.Configuration);
 
 var app = builder.Build();
 
