@@ -10,6 +10,7 @@ namespace ModuloTarefa.Entidades
     public class Tarefa
     {
         public int Id { get; set; }
+        public required int AdminId { get; set; }
         public required string Titulo { get; set; }
         public required string Descricao { get; set; }
         public required DateTime DataCriacao { get; set; }
