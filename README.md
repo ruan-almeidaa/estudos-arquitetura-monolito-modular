@@ -44,7 +44,7 @@ Credenciais
 | Campo       | Tipo        | Descrição              |
 |------------|------------|--------------------------|
 | `Id`       | int (PK)   | Identificador único    |
-| `UsuarioId`     | string     | Relação com a tabela de Usuarios|
+| `UsuarioId`     | int     | Relação com a tabela de Usuarios|
 | `Email`    | string     | Email do usuário|
 | `Senha` | string | Senha do usuário |
 
