@@ -31,8 +31,6 @@
 	  <Folder Include="Auxiliares\" />
 	  <Folder Include="Dominio\" />
 	  <Folder Include="Dtos\" />
-	  <Folder Include="Entidades\" />
-	  <Folder Include="Enumeradores\" />
 	  <Folder Include="Infra\" />
 	</ItemGroup>
 
