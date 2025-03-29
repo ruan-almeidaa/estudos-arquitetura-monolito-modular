@@ -29,9 +29,11 @@
 	<ItemGroup>
 	  <Folder Include="Api\" />
 	  <Folder Include="Auxiliares\" />
-	  <Folder Include="Dominio\" />
+	  <Folder Include="Dominio\Interfaces\Servicos\" />
+	  <Folder Include="Dominio\Servicos\" />
 	  <Folder Include="Dtos\" />
-	  <Folder Include="Infra\" />
+	  <Folder Include="Infra\Banco\" />
+	  <Folder Include="Infra\Base\" />
 	</ItemGroup>
 
 </Project>
