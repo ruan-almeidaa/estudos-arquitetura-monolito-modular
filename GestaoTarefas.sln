@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuloTarefa", "Src\Modulos\Tarefa\ModuloTarefa\ModuloTarefa.csproj", "{67ACAB77-9BA5-4993-8E06-822A501BC5CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{B65E21F1-5FA4-4BFF-BAC2-AE85EBB3BC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B65E21F1-5FA4-4BFF-BAC2-AE85EBB3BC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B65E21F1-5FA4-4BFF-BAC2-AE85EBB3BC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67ACAB77-9BA5-4993-8E06-822A501BC5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67ACAB77-9BA5-4993-8E06-822A501BC5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67ACAB77-9BA5-4993-8E06-822A501BC5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67ACAB77-9BA5-4993-8E06-822A501BC5CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,5 +51,6 @@ Global
 		{952E8C93-08FD-4FAF-83BE-46C197DACEF9} = {35617ABF-D802-49AF-A86A-31610FB50245}
 		{2287D324-4CEE-44B5-B4B9-EFE5BCBAA53D} = {952E8C93-08FD-4FAF-83BE-46C197DACEF9}
 		{B65E21F1-5FA4-4BFF-BAC2-AE85EBB3BC54} = {35617ABF-D802-49AF-A86A-31610FB50245}
+		{67ACAB77-9BA5-4993-8E06-822A501BC5CD} = {952E8C93-08FD-4FAF-83BE-46C197DACEF9}
 	EndGlobalSection
 EndGlobal
