@@ -29,8 +29,6 @@
 	<ItemGroup>
 	  <Folder Include="Api\" />
 	  <Folder Include="Auxiliares\" />
-	  <Folder Include="Dominio\Interfaces\Servicos\" />
-	  <Folder Include="Dominio\Servicos\" />
 	  <Folder Include="Dtos\" />
 	</ItemGroup>
 
