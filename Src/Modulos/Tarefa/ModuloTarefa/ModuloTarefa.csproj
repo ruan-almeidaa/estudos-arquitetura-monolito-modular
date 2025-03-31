@@ -28,8 +28,10 @@
 	
 	<ItemGroup>
 	  <Folder Include="Api\" />
-	  <Folder Include="Auxiliares\" />
-	  <Folder Include="Dtos\" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Extensoes\Extensoes.csproj" />
 	</ItemGroup>
 
 </Project>

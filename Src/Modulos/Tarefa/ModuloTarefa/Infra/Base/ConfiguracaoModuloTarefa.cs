@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ModuloTarefa.Auxiliares.Integracoes.ModuloUsuario;
 using ModuloTarefa.Dominio.Interfaces.Repositorios;
 using ModuloTarefa.Infra.Banco;
 using ModuloTarefa.Infra.Repositorios;
@@ -19,6 +20,9 @@ namespace ModuloTarefa.Infra.Base
 
             //Repositórios que irão implementar as interfaces do módulo
             services.AddScoped<ITarefaRepo, TarefaRepo>();
+            services.AddHttpClient<UsuarioHttpClient>(client => {
+                client.BaseAddress = new Uri(configuration["Urls:UsuarioApi"]);
+            });
 
             return services;
         }
