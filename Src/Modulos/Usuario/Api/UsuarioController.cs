@@ -60,6 +60,12 @@ namespace ModuloUsuario.Api
             return await _orquestrador.BuscarTodosUsuarios(numeroPagina, totalItens);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PadraoRespostasApi<UsuarioDetalhadoDto>>> BuscarPorId([FromRoute] int id)
+        {
+            return await _orquestrador.BuscarPorId(id);
+        }
+
 
     }
 }
