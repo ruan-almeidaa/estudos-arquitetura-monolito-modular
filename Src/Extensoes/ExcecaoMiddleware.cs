@@ -33,6 +33,10 @@ namespace Extensoes
             {
                 await HandleExceptionAsync(context, ex, HttpStatusCode.Unauthorized);
             }
+            catch (KeyNotFoundException ex)
+            {
+                await HandleExceptionAsync(context, ex, HttpStatusCode.NotFound);
+            }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(context, ex, HttpStatusCode.InternalServerError);
