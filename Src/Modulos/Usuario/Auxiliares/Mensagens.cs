@@ -19,6 +19,8 @@ namespace ModuloUsuario.Auxiliares
             public const string UsuarioExcluido = "Usuário excluído com sucesso.";
             public const string UsuarioNaoExcluido = "Usuário não excluído.";
             public const string UsuariosEncontrados = "Lista de usuários retornada com sucesso.";
+            public const string UsuarioEncontrado = "Usuário retornado com sucesso.";
+            public const string UsuarioNaoEncontrado = "Usuário não encontrado.";
 
         }
 

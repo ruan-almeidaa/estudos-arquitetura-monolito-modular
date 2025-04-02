@@ -16,6 +16,6 @@ namespace ModuloUsuario.Dominio.Interfaces.Servicos
         Task<PadraoRespostasApi<UsuarioAutenticadoDto>> EditarUsuario(UsuarioEditarDto usuarioEditarDto);
         Task<PadraoRespostasApi<bool>> ExcluirUsuario(int idUsuario);
         Task<PadraoRespostasApi<Paginacao<UsuarioDetalhadoDto>>> BuscarTodosUsuarios(int numeroPagina, int totalItens);
-
+        Task<PadraoRespostasApi<UsuarioDetalhadoDto>> BuscarPorId(int id);
     }
 }

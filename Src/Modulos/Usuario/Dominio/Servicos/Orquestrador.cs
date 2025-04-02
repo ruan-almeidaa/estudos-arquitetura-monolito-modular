@@ -45,6 +45,17 @@ namespace ModuloUsuario.Dominio.Servicos
 
         }
 
+        public async Task<PadraoRespostasApi<UsuarioDetalhadoDto>> BuscarPorId(int id)
+        {
+            Usuario usuario = await _usuarioServ.BuscarUsuarioPorId(id);
+            if (usuario == null) throw new KeyNotFoundException(Mensagens.Usuario.UsuarioNaoEncontrado);
+
+            UsuarioDetalhadoDto usuarioDetalhadoDto = _mapper.Map<UsuarioDetalhadoDto>(usuario);
+            return PadraoRespostasApi<UsuarioDetalhadoDto>
+                .CriarResposta<UsuarioDetalhadoDto>(usuarioDetalhadoDto, Mensagens.Usuario.UsuarioEncontrado, System.Net.HttpStatusCode.OK);
+
+        }
+
         public async Task<PadraoRespostasApi<Paginacao<UsuarioDetalhadoDto>>> BuscarTodosUsuarios(int numeroPagina, int totalItens)
         {
             List<Usuario> usuarios = await _usuarioServ.BuscarTodosUsuarios(numeroPagina, totalItens);
