@@ -15,6 +15,7 @@ namespace ModuloTarefa.Auxiliares
             public const string DescricaoObrigatoria = "Descrição é obrigatória";
             public const string DescricaoTamanho = "Descrição deve ter entre 4 e 200 caracteres";
             public const string AdminNecessario = "É necessário vincular um administrador na tarefa.";
+            public const string Criada = "Tarefa criada com sucesso";
         }
         public static class Token
         {

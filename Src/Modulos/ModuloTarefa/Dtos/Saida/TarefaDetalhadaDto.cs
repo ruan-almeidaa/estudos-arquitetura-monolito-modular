@@ -15,7 +15,8 @@ namespace ModuloTarefa.Dtos.Saida
         public required string Descricao { get; set; }
         public required DateTime DataCriacao { get; set; }
         public DateTime? DataConclusao { get; set; }
-        public required StatusTarefa Status { get; set; } = StatusTarefa.Pendente;
+        public required StatusTarefa Status { get; set; }
+        public required string StatusDescricao { get; set; }
         public required UsuarioDetalhadoDto Administrador { get; set; }
         public UsuarioDetalhadoDto? Usuario { get; set; }
     }

@@ -13,6 +13,6 @@ namespace ModuloTarefa.Dtos.Entrada
         public required string Titulo { get; set; }
         public required string Descricao { get; set; }
         public int? UsuarioId { get; set; }
-        public required StatusTarefa Status { get; set; } = StatusTarefa.Pendente;
+        public required int Status { get; set; }
     }
 }

@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FluentValidation.AspNetCore;
+using FluentValidation;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ModuloTarefa.Auxiliares;
 using ModuloTarefa.Auxiliares.Integracoes.ModuloUsuario;
 using ModuloTarefa.Dominio.Interfaces.Repositorios;
 using ModuloTarefa.Dominio.Interfaces.Servicos;
 using ModuloTarefa.Dominio.Servicos;
 using ModuloTarefa.Infra.Banco;
 using ModuloTarefa.Infra.Repositorios;
+using ModuloTarefa.Auxiliares.Validacoes.Tarefa;
 
 namespace ModuloTarefa.Infra.Base
 {
@@ -34,6 +38,13 @@ namespace ModuloTarefa.Infra.Base
                 }
                 client.BaseAddress = new Uri(usuarioApiUrl);
             });
+
+            //Validações automáticas do módulo, através do FluentValidation
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<ValidaTarefaCriarDto>();
+
+            //Mapemanto automático com AutoMapper
+            services.AddAutoMapper(typeof(Mapeamentos));
 
             return services;
         }

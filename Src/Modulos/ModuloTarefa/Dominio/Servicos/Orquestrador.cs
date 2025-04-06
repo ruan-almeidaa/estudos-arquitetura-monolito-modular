@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Extensoes;
+using ModuloTarefa.Auxiliares;
 using ModuloTarefa.Auxiliares.Integracoes.ModuloUsuario;
 using ModuloTarefa.Auxiliares.Integracoes.ModuloUsuario.Dtos.Entrada;
 using ModuloTarefa.Dominio.Interfaces.Servicos;
@@ -27,13 +28,27 @@ namespace ModuloTarefa.Dominio.Servicos
         }
         public async Task<PadraoRespostasApi<TarefaDetalhadaDto>> CriarTarefa(TarefaCriarDto tarefaCriarDto)
         {
-            Tarefa tarefaCriada = await _tarefaServ.CriarTarefa(_mapper.Map<Tarefa>(tarefaCriarDto));
+            UsuarioDetalhadoDto usuarioTarefa = null;
             if (tarefaCriarDto.UsuarioId.HasValue)
             {
-                UsuarioDetalhadoDto usuarioDetalhadoDto = await _usuarioHttpClient.BuscarUsuarioPorId(tarefaCriarDto.UsuarioId.Value);
+                // Caso Usuario não exista, vai lançar uma exceção
+                usuarioTarefa = await _usuarioHttpClient.BuscarUsuarioPorId(tarefaCriarDto.UsuarioId.Value);
             }
 
-                 throw new NotImplementedException();
+            Tarefa tarefaCriada = await _tarefaServ.CriarTarefa(_mapper.Map<Tarefa>(tarefaCriarDto));
+
+            //Busca o administrador responsável pela tarefa
+            UsuarioDetalhadoDto adminTarefa = await _usuarioHttpClient.BuscarUsuarioPorId(tarefaCriarDto.AdminId);
+            TarefaDetalhadaDto tarefaDetalhadaDto = _mapper.Map<TarefaDetalhadaDto>(tarefaCriada);
+
+            tarefaDetalhadaDto.Usuario = usuarioTarefa;
+            tarefaDetalhadaDto.Administrador = adminTarefa;
+            tarefaDetalhadaDto.StatusDescricao = ExtensoesEnum.BuscaDescricao(tarefaCriada.Status);
+
+            return PadraoRespostasApi<TarefaDetalhadaDto>
+                .CriarResposta<TarefaDetalhadaDto>(tarefaDetalhadaDto, Mensagens.Tarefa.Criada, System.Net.HttpStatusCode.Created);
+
+
         }
     }
 }

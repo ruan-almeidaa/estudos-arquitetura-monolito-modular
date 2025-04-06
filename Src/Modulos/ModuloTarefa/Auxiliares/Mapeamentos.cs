@@ -14,9 +14,11 @@ namespace ModuloTarefa.Auxiliares
     {
         public Mapeamentos()
         {
-            CreateMap<Tarefa, TarefaDetalhadaDto>();
-            CreateMap<TarefaCriarDto, Tarefa>();
-            CreateMap<Tarefa, TarefaDetalhadaDto>();
+            CreateMap<Tarefa, TarefaDetalhadaDto>().ReverseMap();
+            CreateMap<TarefaCriarDto, Tarefa>().ForMember
+                (dest => dest.DataCriacao, opt => opt.MapFrom(src => DateTime.Now))
+                .ReverseMap();
+
         }
     }
 }
