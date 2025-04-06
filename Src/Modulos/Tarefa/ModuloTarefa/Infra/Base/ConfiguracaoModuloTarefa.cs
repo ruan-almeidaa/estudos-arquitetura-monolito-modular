@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModuloTarefa.Auxiliares.Integracoes.ModuloUsuario;
 using ModuloTarefa.Dominio.Interfaces.Repositorios;
+using ModuloTarefa.Dominio.Interfaces.Servicos;
+using ModuloTarefa.Dominio.Servicos;
 using ModuloTarefa.Infra.Banco;
 using ModuloTarefa.Infra.Repositorios;
 
@@ -18,10 +20,19 @@ namespace ModuloTarefa.Infra.Base
                 options.UseSqlServer(configuration.GetConnectionString("ConexaoBd"));
             });
 
-            //Repositórios que irão implementar as interfaces do módulo
             services.AddScoped<ITarefaRepo, TarefaRepo>();
+
+            services.AddScoped<IOrquestrador, Orquestrador>();
+            services.AddScoped<ITarefaServ, TarefaServ>();
+
+
             services.AddHttpClient<UsuarioHttpClient>(client => {
-                client.BaseAddress = new Uri(configuration["Urls:UsuarioApi"]);
+                var usuarioApiUrl = configuration["Urls:UsuarioApi"];
+                if (string.IsNullOrEmpty(usuarioApiUrl))
+                {
+                    throw new Exception("A URL da API de Usuário não foi configurada corretamente.");
+                }
+                client.BaseAddress = new Uri(usuarioApiUrl);
             });
 
             return services;

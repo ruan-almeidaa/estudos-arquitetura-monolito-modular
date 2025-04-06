@@ -6,13 +6,22 @@ using ModuloUsuario.Api;
 using ModuloUsuario.Infra.Base;
 using ModuloTarefa.Infra.Base;
 using System.Text;
+using ModuloTarefa.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(UsuarioController).Assembly);
+    .AddApplicationPart(typeof(UsuarioController).Assembly)
+    .AddApplicationPart(typeof(TarefaController).Assembly);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddSwaggerGen(c =>
+{
+    c.CustomSchemaIds(type => type.FullName); // Usa o namespace completo no Swagger
+});
+builder.Services.AddHttpContextAccessor();
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //Retorna os erros no padrão da ResponseModel

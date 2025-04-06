@@ -27,17 +27,21 @@ namespace ModuloTarefa.Auxiliares.Integracoes.ModuloUsuario
         public async Task<UsuarioDetalhadoDto?> BuscarUsuarioPorId(int idUsuario)
         {
             // Obtendo o token JWT do contexto da requisição atual
-            var token = _httpContextAccessor.HttpContext?.User.FindFirst("token")?.Value;
+            var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
             if (string.IsNullOrEmpty(token)) throw new UnauthorizedAccessException(Mensagens.Token.TokenNaoEncontrado);
+
+            // Removendo "Bearer " para pegar apenas o token
+            token = token.Replace("Bearer ", "");
 
             // Adicionando o token JWT ao cabeçalho da requisição
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var resposta = await _httpClient.GetAsync($"/{idUsuario}");
+            var resposta = await _httpClient.GetAsync($"{idUsuario}");
 
             if (resposta.IsSuccessStatusCode)
             {
-                return await resposta.Content.ReadFromJsonAsync<UsuarioDetalhadoDto>();
+                var resultado = await resposta.Content.ReadFromJsonAsync<PadraoRespostasApi<UsuarioDetalhadoDto>>();
+                return resultado?.Dados;
             }
             else
             {
