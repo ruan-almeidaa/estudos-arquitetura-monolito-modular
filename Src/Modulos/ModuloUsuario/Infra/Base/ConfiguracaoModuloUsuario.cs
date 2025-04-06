@@ -36,6 +36,7 @@ namespace ModuloUsuario.Infra.Base
             //Validações automáticas do módulo, através do FluentValidation
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<ValidaUsuarioCriarDto>();
+            services.AddValidatorsFromAssemblyContaining<ValidaUsuarioEditarDto>();
 
             //Mapemanto automático com AutoMapper
             services.AddAutoMapper(typeof(Mapeamentos));
