@@ -89,6 +89,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.ExecutaMigrationsModuloUsuario();
+app.ExecutaMigrationsModuloTarefa();
 app.UseMiddleware<ExcecaoMiddleware>();
 
 app.UseHttpsRedirection();
