@@ -20,6 +20,8 @@ namespace ModuloTarefa.Auxiliares.Validacoes.Tarefa
                 .Length(4, 200).WithMessage(Mensagens.Tarefa.DescricaoTamanho);
             RuleFor(x => x.AdminId)
                 .GreaterThan(0).WithMessage(Mensagens.Tarefa.AdminNecessario);
+            RuleFor(x => x.UsuarioId)
+                .Must(usuarioId => !usuarioId.HasValue || usuarioId.Value > 0).WithMessage(Mensagens.Usuario.IdInformadoMaiorQueZero);
 
         }
     }

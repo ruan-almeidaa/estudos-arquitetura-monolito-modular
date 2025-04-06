@@ -20,5 +20,9 @@ namespace ModuloTarefa.Auxiliares
         {
             public const string TokenNaoEncontrado = "Token não encontrado";
         }
+        public static class Usuario
+        {
+            public const string IdInformadoMaiorQueZero = "Se informado, o UsuarioId deve ser maior que zero.";
+        }
     }
 }
