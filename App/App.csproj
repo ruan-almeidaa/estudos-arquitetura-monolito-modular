@@ -20,8 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Src\Extensoes\Extensoes.csproj" />
-    <ProjectReference Include="..\Src\Modulos\Tarefa\ModuloTarefa\ModuloTarefa.csproj" />
-    <ProjectReference Include="..\Src\Modulos\Usuario\ModuloUsuario.csproj" />
+    <ProjectReference Include="..\Src\Modulos\ModuloTarefa\ModuloTarefa.csproj" />
+    <ProjectReference Include="..\Src\Modulos\ModuloUsuario\ModuloUsuario.csproj" />
   </ItemGroup>
 
 </Project>

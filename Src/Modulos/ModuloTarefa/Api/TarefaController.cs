@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ModuloTarefa.Dominio.Interfaces.Servicos;
 using ModuloTarefa.Dtos.Entrada;
 using ModuloTarefa.Dtos.Saida;
+using System.Security.Claims;
 
 namespace ModuloTarefa.Api
 {
@@ -21,6 +22,10 @@ namespace ModuloTarefa.Api
         [Authorize(Roles = "Administrador")]
         public async Task<ActionResult<PadraoRespostasApi<TarefaDetalhadaDto>>> CriarTarefa([FromBody] TarefaCriarDto tarefaCriarDto)
         {
+            int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
+            ValidaAcessoRota.ValidarAcessoRota(idUsuarioToken, tarefaCriarDto.AdminId, direitoUsuarioToken, true);
+
             return await _orquestrador.CriarTarefa(tarefaCriarDto);
         }
     }
