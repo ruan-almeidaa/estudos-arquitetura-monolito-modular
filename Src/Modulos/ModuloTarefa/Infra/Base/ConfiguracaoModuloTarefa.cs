@@ -42,6 +42,8 @@ namespace ModuloTarefa.Infra.Base
             //Validações automáticas do módulo, através do FluentValidation
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<ValidaTarefaCriarDto>();
+            services.AddValidatorsFromAssemblyContaining<ValidaTarefaEditarDto>();
+            services.AddValidatorsFromAssemblyContaining<ValidaTarefaAtualizarStatusDto>();
 
             //Mapemanto automático com AutoMapper
             services.AddAutoMapper(typeof(Mapeamentos));
