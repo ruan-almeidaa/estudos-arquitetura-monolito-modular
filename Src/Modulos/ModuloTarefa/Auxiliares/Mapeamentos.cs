@@ -18,6 +18,10 @@ namespace ModuloTarefa.Auxiliares
             CreateMap<TarefaCriarDto, Tarefa>().ForMember
                 (dest => dest.DataCriacao, opt => opt.MapFrom(src => DateTime.Now))
                 .ReverseMap();
+            CreateMap<TarefaEditarDto, Tarefa>()
+                .ForMember(dest => dest.DataCriacao, opt => opt.Ignore())
+                .ForMember(dest => dest.DataConclusao, opt => opt.Ignore())
+                .ReverseMap();
 
         }
     }

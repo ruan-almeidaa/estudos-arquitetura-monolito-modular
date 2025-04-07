@@ -12,5 +12,6 @@ namespace ModuloTarefa.Dominio.Interfaces.Servicos
     public interface IOrquestrador
     {
         Task <PadraoRespostasApi<TarefaDetalhadaDto>> CriarTarefa(TarefaCriarDto tarefaCriarDto);
+        Task<PadraoRespostasApi<TarefaDetalhadaDto>> EditarTarefa(TarefaEditarDto tarefaEditarDto);
     }
 }
