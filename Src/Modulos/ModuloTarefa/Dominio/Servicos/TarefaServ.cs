@@ -1,6 +1,10 @@
-﻿using ModuloTarefa.Dominio.Interfaces.Repositorios;
+﻿using Microsoft.AspNetCore.Http;
+using ModuloTarefa.Auxiliares;
+using ModuloTarefa.Dominio.Interfaces.Repositorios;
 using ModuloTarefa.Dominio.Interfaces.Servicos;
+using ModuloTarefa.Dtos.Entrada;
 using ModuloTarefa.Entidades;
+using ModuloTarefa.Enumeradores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +20,18 @@ namespace ModuloTarefa.Dominio.Servicos
         {
             _tarefaRepo = tarefaRepo;
         }
+
+        public async Task<Tarefa> AtualizarStatustarefa(TarefaAtualizarStatusDto tarefaAtualizarStatusDto)
+        {
+            Tarefa tarefa = await BuscarTarefaPorId(tarefaAtualizarStatusDto.Id);
+            if (tarefa.Status == StatusTarefa.Concluida) throw new BadHttpRequestException(Mensagens.Tarefa.TarefaJaConcluida);
+            if (tarefa == null) throw new KeyNotFoundException(Mensagens.Tarefa.TarefaNaoEncontrada);
+
+            tarefa.Status = (StatusTarefa)tarefaAtualizarStatusDto.Status;
+
+            return await _tarefaRepo.AtualizarStatusTarefa(tarefa);
+        }
+
         public async Task<Tarefa> BuscarTarefaPorId(int id)
         {
             return await _tarefaRepo.BuscarTarefaPorId(id);

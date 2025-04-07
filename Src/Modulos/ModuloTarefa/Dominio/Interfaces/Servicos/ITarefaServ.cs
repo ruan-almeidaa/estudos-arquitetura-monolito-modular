@@ -1,4 +1,5 @@
-﻿using ModuloTarefa.Entidades;
+﻿using ModuloTarefa.Dtos.Entrada;
+using ModuloTarefa.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace ModuloTarefa.Dominio.Interfaces.Servicos
         Task<bool> ExcluirTarefa(int idTarefa);
         Task<List<Tarefa>> BuscarTodasTarefas(int numeroPagina, int totalItens);
         Task<int> ContarTarefas();
+        Task<Tarefa> AtualizarStatustarefa(TarefaAtualizarStatusDto tarefaAtualizarStatusDto);
     }
 }
