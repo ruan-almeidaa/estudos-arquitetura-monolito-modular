@@ -17,6 +17,15 @@ namespace ModuloTarefa.Infra.Repositorios
         {
             _contexto = contexto;
         }
+
+        public async Task<Tarefa> AtualizarStatusTarefa(Tarefa tarefa)
+        {
+            _contexto.ChangeTracker.Clear();
+            _contexto.Entry(tarefa).Property(t => t.Status).IsModified = true;
+            _contexto.SaveChangesAsync();
+            return await BuscarTarefaPorId(tarefa.Id);
+        }
+
         public async Task<Tarefa> BuscarTarefaPorId(int id)
         {
             return await _contexto.Tarefas
