@@ -22,7 +22,7 @@ namespace ModuloTarefa.Infra.Repositorios
         {
             _contexto.ChangeTracker.Clear();
             _contexto.Entry(tarefa).Property(t => t.Status).IsModified = true;
-            _contexto.SaveChangesAsync();
+            await _contexto.SaveChangesAsync();
             return await BuscarTarefaPorId(tarefa.Id);
         }
 

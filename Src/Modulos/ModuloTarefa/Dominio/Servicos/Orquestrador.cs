@@ -29,6 +29,31 @@ namespace ModuloTarefa.Dominio.Servicos
             _usuarioHttpClient = usuarioHttpClient;
             _mapper = mapper;
         }
+
+        public async Task<PadraoRespostasApi<TarefaDetalhadaDto>> AtualizarStatusTarefa(TarefaAtualizarStatusDto tarefaAtualizarStatusDto)
+        {
+            UsuarioDetalhadoDto usuarioTarefa = null;
+            if (tarefaAtualizarStatusDto.UsuarioId.HasValue)
+            {
+                // Caso Usuario não exista, vai lançar uma exceção
+                usuarioTarefa = await _usuarioHttpClient.BuscarUsuarioPorId(tarefaAtualizarStatusDto.UsuarioId.Value);
+            }
+
+            Tarefa tarefaStatusAtualizado = await _tarefaServ.AtualizarStatustarefa(tarefaAtualizarStatusDto);
+            //Busca o administrador responsável pela tarefa
+            UsuarioDetalhadoDto adminTarefa = await _usuarioHttpClient.BuscarUsuarioPorId(tarefaStatusAtualizado.AdminId);
+            TarefaDetalhadaDto tarefaDetalhadaDto = _mapper.Map<TarefaDetalhadaDto>(tarefaStatusAtualizado);
+
+            tarefaDetalhadaDto.Usuario = usuarioTarefa;
+            tarefaDetalhadaDto.Administrador = adminTarefa;
+            tarefaDetalhadaDto.StatusDescricao = ExtensoesEnum.BuscaDescricao(tarefaStatusAtualizado.Status);
+
+            return PadraoRespostasApi<TarefaDetalhadaDto>
+                .CriarResposta<TarefaDetalhadaDto>(tarefaDetalhadaDto, Mensagens.Tarefa.Concluida, System.Net.HttpStatusCode.OK);
+
+
+        }
+
         public async Task<PadraoRespostasApi<TarefaDetalhadaDto>> CriarTarefa(TarefaCriarDto tarefaCriarDto)
         {
             UsuarioDetalhadoDto usuarioTarefa = null;

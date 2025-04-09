@@ -19,6 +19,7 @@ namespace ModuloTarefa.Auxiliares
             public const string Editada = "Tarefa editada com sucesso";
             public const string TarefaNaoEncontrada = "Tarefa não encontrada";
             public const string TarefaJaConcluida = "Tarefa já concluída";
+            public const string Concluida = "Tarefa concluída com sucesso";
         }
         public static class Token
         {
