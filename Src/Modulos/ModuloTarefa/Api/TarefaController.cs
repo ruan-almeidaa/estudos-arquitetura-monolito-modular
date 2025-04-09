@@ -15,7 +15,7 @@ namespace ModuloTarefa.Api
     {
         private readonly IOrquestrador _orquestrador;
         public TarefaController(IOrquestrador orquestrador)
-        { 
+        {
             _orquestrador = orquestrador;
         }
 
@@ -48,6 +48,15 @@ namespace ModuloTarefa.Api
 
             return await _orquestrador.AtualizarStatusTarefa(tarefaAtualizarStatusDto);
         }
+        [HttpDelete("Excluir/{idTarefa}")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<ActionResult<PadraoRespostasApi<bool>>> ExcluirTarefa(int idTarefa)
+        {
+            int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
+            ValidaAcessoRota.ValidarAcessoRota(idUsuarioToken, idTarefa, direitoUsuarioToken, true);
+            return await _orquestrador.ExcluirTarefa(idTarefa);
 
+        }
     }
 }

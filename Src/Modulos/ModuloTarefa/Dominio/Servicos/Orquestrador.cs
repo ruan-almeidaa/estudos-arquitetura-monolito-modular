@@ -110,5 +110,12 @@ namespace ModuloTarefa.Dominio.Servicos
             return PadraoRespostasApi<TarefaDetalhadaDto>
                 .CriarResposta<TarefaDetalhadaDto>(tarefaDetalhadaDto, Mensagens.Tarefa.Editada, System.Net.HttpStatusCode.OK);
         }
+
+        public async Task<PadraoRespostasApi<bool>> ExcluirTarefa(int idTarefa)
+        {
+            bool excluiuTarefa = await _tarefaServ.ExcluirTarefa(idTarefa);
+            if (excluiuTarefa) return PadraoRespostasApi<bool>.CriarResposta<bool>(true, Mensagens.Tarefa.TarefaExcluida, System.Net.HttpStatusCode.OK);
+            throw new InvalidOperationException(Mensagens.Tarefa.TarefaNaoExcluida);
+        }
     }
 }

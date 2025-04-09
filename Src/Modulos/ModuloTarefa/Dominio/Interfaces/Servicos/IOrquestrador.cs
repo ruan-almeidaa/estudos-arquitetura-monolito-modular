@@ -14,5 +14,6 @@ namespace ModuloTarefa.Dominio.Interfaces.Servicos
         Task <PadraoRespostasApi<TarefaDetalhadaDto>> CriarTarefa(TarefaCriarDto tarefaCriarDto);
         Task<PadraoRespostasApi<TarefaDetalhadaDto>> EditarTarefa(TarefaEditarDto tarefaEditarDto);
         Task<PadraoRespostasApi<TarefaDetalhadaDto>> AtualizarStatusTarefa(TarefaAtualizarStatusDto tarefaAtualizarStatusDto);
+        Task<PadraoRespostasApi<bool>> ExcluirTarefa(int idTarefa);
     }
 }
