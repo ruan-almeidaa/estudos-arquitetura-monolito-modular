@@ -28,6 +28,10 @@ namespace ModuloTarefa.Dominio.Servicos
             if (tarefa == null) throw new KeyNotFoundException(Mensagens.Tarefa.TarefaNaoEncontrada);
 
             tarefa.Status = (StatusTarefa)tarefaAtualizarStatusDto.Status;
+            if (tarefa.Status == StatusTarefa.Concluida)
+            {
+                tarefa = await ConcluirTarefa(tarefa);
+            }
 
             return await _tarefaRepo.AtualizarStatusTarefa(tarefa);
         }
@@ -40,6 +44,12 @@ namespace ModuloTarefa.Dominio.Servicos
         public async Task<List<Tarefa>> BuscarTodasTarefas(int numeroPagina, int totalItens)
         {
             return await _tarefaRepo.BuscarTodasTarefas(numeroPagina, totalItens);
+        }
+
+        public async Task<Tarefa> ConcluirTarefa(Tarefa tarefa)
+        {
+            tarefa.DataConclusao = DateTime.Now;
+            return await EditarTarefa(tarefa);
         }
 
         public async Task<int> ContarTarefas()
