@@ -40,13 +40,7 @@ namespace ModuloTarefa.Dominio.Servicos
             }
 
             Tarefa tarefaStatusAtualizado = await _tarefaServ.AtualizarStatustarefa(tarefaAtualizarStatusDto);
-            //Busca o administrador responsável pela tarefa
-            UsuarioDetalhadoDto adminTarefa = await _usuarioHttpClient.BuscarUsuarioPorId(tarefaStatusAtualizado.AdminId);
-            TarefaDetalhadaDto tarefaDetalhadaDto = _mapper.Map<TarefaDetalhadaDto>(tarefaStatusAtualizado);
-
-            tarefaDetalhadaDto.Usuario = usuarioTarefa;
-            tarefaDetalhadaDto.Administrador = adminTarefa;
-            tarefaDetalhadaDto.StatusDescricao = ExtensoesEnum.BuscaDescricao(tarefaStatusAtualizado.Status);
+            TarefaDetalhadaDto tarefaDetalhadaDto = await _tarefaServ.ConverteParaDetalhada(tarefaStatusAtualizado);
 
             return PadraoRespostasApi<TarefaDetalhadaDto>
                 .CriarResposta<TarefaDetalhadaDto>(tarefaDetalhadaDto, Mensagens.Tarefa.Concluida, System.Net.HttpStatusCode.OK);
