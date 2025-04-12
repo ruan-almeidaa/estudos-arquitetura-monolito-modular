@@ -54,6 +54,17 @@ namespace ModuloTarefa.Dominio.Servicos
 
         }
 
+        public async Task<PadraoRespostasApi<TarefaDetalhadaDto>> BuscarTarefaPorId(int idTarefa)
+        {
+            Tarefa tarefa = await _tarefaServ.BuscarTarefaPorId(idTarefa);
+            if (tarefa == null) throw new KeyNotFoundException(Mensagens.Tarefa.TarefaNaoEncontrada);
+
+            TarefaDetalhadaDto tarefaDetalhadaDto = _mapper.Map<TarefaDetalhadaDto>(tarefa);
+
+            return PadraoRespostasApi<TarefaDetalhadaDto>
+                .CriarResposta<TarefaDetalhadaDto>(tarefaDetalhadaDto, Mensagens.Tarefa.TarefasEncontradas, System.Net.HttpStatusCode.OK);
+        }
+
         public async Task<PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>> BuscarTodasTarefas(int numeroPagina, int totalItens)
         {
             List<Tarefa> tarefas = await _tarefaServ.BuscarTodasTarefas(numeroPagina, totalItens);

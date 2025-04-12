@@ -16,5 +16,6 @@ namespace ModuloTarefa.Dominio.Interfaces.Servicos
         Task<PadraoRespostasApi<TarefaDetalhadaDto>> AtualizarStatusTarefa(TarefaAtualizarStatusDto tarefaAtualizarStatusDto);
         Task<PadraoRespostasApi<bool>> ExcluirTarefa(int idTarefa);
         Task<PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>> BuscarTodasTarefas(int numeroPagina, int totalItens);
+        Task<PadraoRespostasApi<TarefaDetalhadaDto>> BuscarTarefaPorId(int idTarefa);
     }
 }

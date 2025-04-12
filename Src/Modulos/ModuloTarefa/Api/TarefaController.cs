@@ -53,5 +53,13 @@ namespace ModuloTarefa.Api
         {
             return await _orquestrador.BuscarTodasTarefas(numeroPagina, totalItens);
         }
+        [HttpGet("BuscarTarefaPorId/{idTarefa}")]
+        public async Task<ActionResult<PadraoRespostasApi<TarefaDetalhadaDto>>> BuscarTarefaPorId([FromRoute] int idTarefa)
+        {
+            int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
+            ValidaAcessoRota.ValidarAcessoRota(idUsuarioToken, idTarefa, direitoUsuarioToken, true);
+            return await _orquestrador.BuscarTarefaPorId(idTarefa);
+        }
     }
 }
