@@ -58,5 +58,11 @@ namespace ModuloTarefa.Api
             return await _orquestrador.ExcluirTarefa(idTarefa);
 
         }
+        [HttpGet("BuscarTodasTarefas")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<ActionResult<PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>>> BuscarTodasTarefas([FromQuery] int numeroPagina = 1, [FromQuery] int totalItens = 10)
+        {
+            return await _orquestrador.BuscarTodasTarefas(numeroPagina, totalItens);
+        }
     }
 }
