@@ -1,4 +1,5 @@
 ﻿using ModuloTarefa.Dtos.Entrada;
+using ModuloTarefa.Dtos.Saida;
 using ModuloTarefa.Entidades;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,6 @@ namespace ModuloTarefa.Dominio.Interfaces.Servicos
         Task<int> ContarTarefas();
         Task<Tarefa> AtualizarStatustarefa(TarefaAtualizarStatusDto tarefaAtualizarStatusDto);
         Task<Tarefa> ConcluirTarefa(Tarefa tarefa);
+        Task<TarefaDetalhadaDto> ConverteParaDetalhada(Tarefa tarefa);
     }
 }

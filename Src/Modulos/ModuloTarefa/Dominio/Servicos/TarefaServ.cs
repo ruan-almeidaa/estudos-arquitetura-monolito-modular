@@ -1,24 +1,28 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Extensoes;
+using Microsoft.AspNetCore.Http;
 using ModuloTarefa.Auxiliares;
+using ModuloTarefa.Auxiliares.Integracoes.ModuloUsuario;
+using ModuloTarefa.Auxiliares.Integracoes.ModuloUsuario.Dtos.Entrada;
 using ModuloTarefa.Dominio.Interfaces.Repositorios;
 using ModuloTarefa.Dominio.Interfaces.Servicos;
 using ModuloTarefa.Dtos.Entrada;
+using ModuloTarefa.Dtos.Saida;
 using ModuloTarefa.Entidades;
 using ModuloTarefa.Enumeradores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuloTarefa.Dominio.Servicos
 {
     public class TarefaServ : ITarefaServ
     {
         private readonly ITarefaRepo _tarefaRepo;
-        public TarefaServ(ITarefaRepo tarefaRepo)
+        private readonly UsuarioHttpClient _usuarioHttpClient;
+        private readonly IMapper _mapper;
+        public TarefaServ(ITarefaRepo tarefaRepo,UsuarioHttpClient usuarioHttpClient, IMapper mapper)
         {
             _tarefaRepo = tarefaRepo;
+            _usuarioHttpClient = usuarioHttpClient;
+            _mapper = mapper;
         }
 
         public async Task<Tarefa> AtualizarStatustarefa(TarefaAtualizarStatusDto tarefaAtualizarStatusDto)
@@ -55,6 +59,37 @@ namespace ModuloTarefa.Dominio.Servicos
         public async Task<int> ContarTarefas()
         {
             return await _tarefaRepo.ContarTarefas();
+        }
+
+        public async Task<TarefaDetalhadaDto> ConverteParaDetalhada(Tarefa tarefa)
+        {
+            
+            //Busca o administrador responsável pela tarefa
+            UsuarioDetalhadoDto adminTarefa = await _usuarioHttpClient.BuscarUsuarioPorId(tarefa.AdminId);
+            //Busca o usuário responsável pela tarefa
+            UsuarioDetalhadoDto usuarioTarefa = null;
+            if (tarefa.UsuarioId.HasValue)
+            {
+                try
+                {
+                    usuarioTarefa = await _usuarioHttpClient.BuscarUsuarioPorId(tarefa.UsuarioId.Value);
+
+                }
+                catch (Exception)
+                {
+
+                    usuarioTarefa = null;
+                }
+            }
+            //Converte a tarefa para o DTO
+            TarefaDetalhadaDto tarefaDetalhadaDto = _mapper.Map<TarefaDetalhadaDto>(tarefa);
+
+            //Preenche os dados do DTO com os que foram buscados
+            tarefaDetalhadaDto.Usuario = usuarioTarefa;
+            tarefaDetalhadaDto.Administrador = adminTarefa;
+            tarefaDetalhadaDto.StatusDescricao = ExtensoesEnum.BuscaDescricao(tarefa.Status);
+
+            return tarefaDetalhadaDto;
         }
 
         public async Task<Tarefa> CriarTarefa(Tarefa tarefa)

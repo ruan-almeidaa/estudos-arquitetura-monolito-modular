@@ -59,7 +59,7 @@ namespace ModuloTarefa.Dominio.Servicos
             Tarefa tarefa = await _tarefaServ.BuscarTarefaPorId(idTarefa);
             if (tarefa == null) throw new KeyNotFoundException(Mensagens.Tarefa.TarefaNaoEncontrada);
 
-            TarefaDetalhadaDto tarefaDetalhadaDto = _mapper.Map<TarefaDetalhadaDto>(tarefa);
+            TarefaDetalhadaDto tarefaDetalhadaDto = await _tarefaServ.ConverteParaDetalhada(tarefa);
 
             return PadraoRespostasApi<TarefaDetalhadaDto>
                 .CriarResposta<TarefaDetalhadaDto>(tarefaDetalhadaDto, Mensagens.Tarefa.TarefasEncontradas, System.Net.HttpStatusCode.OK);
