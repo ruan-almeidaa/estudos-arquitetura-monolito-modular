@@ -65,7 +65,10 @@ namespace ModuloTarefa.Dominio.Servicos
 
             if (tarefas == null) throw new KeyNotFoundException(Mensagens.Tarefa.TarefaNaoEncontrada);
             int totalTarefas = await _tarefaServ.ContarTarefas();
-            List<TarefaDetalhadaDto> tarefaDetalhadaDtos = tarefas.Select(t => _mapper.Map<TarefaDetalhadaDto>(t)).ToList();
+            List<TarefaDetalhadaDto> tarefaDetalhadaDtos =
+                (await Task.WhenAll(
+                    tarefas.Select(t => _tarefaServ.ConverteParaDetalhada(t)))).ToList();
+
             Paginacao<TarefaDetalhadaDto> paginacao = new Paginacao<TarefaDetalhadaDto>
             {
                 Itens = tarefaDetalhadaDtos,
