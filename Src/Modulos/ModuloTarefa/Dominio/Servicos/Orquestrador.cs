@@ -121,13 +121,7 @@ namespace ModuloTarefa.Dominio.Servicos
 
             Tarefa tarefaEditada = await _tarefaServ.EditarTarefa(tarefaParaEditar);
 
-            //Prepara o retorno detalhado
-            TarefaDetalhadaDto tarefaDetalhadaDto = _mapper.Map<TarefaDetalhadaDto>(tarefaEditada);
-            //Busca o administrador responsável pela tarefa
-            UsuarioDetalhadoDto adminTarefa = await _usuarioHttpClient.BuscarUsuarioPorId(tarefaEditarDto.AdminId);
-            tarefaDetalhadaDto.Usuario = usuarioTarefa;
-            tarefaDetalhadaDto.Administrador = adminTarefa;
-            tarefaDetalhadaDto.StatusDescricao = ExtensoesEnum.BuscaDescricao(tarefaEditada.Status);
+            TarefaDetalhadaDto tarefaDetalhadaDto = await _tarefaServ.ConverteParaDetalhada(tarefaEditada);
 
             return PadraoRespostasApi<TarefaDetalhadaDto>
                 .CriarResposta<TarefaDetalhadaDto>(tarefaDetalhadaDto, Mensagens.Tarefa.Editada, System.Net.HttpStatusCode.OK);
