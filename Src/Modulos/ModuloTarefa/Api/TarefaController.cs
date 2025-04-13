@@ -61,5 +61,19 @@ namespace ModuloTarefa.Api
             ValidaAcessoRota.ValidarAcessoRota(idUsuarioToken, idTarefa, direitoUsuarioToken, true);
             return await _orquestrador.BuscarTarefaPorId(idTarefa);
         }
+        [HttpGet("BuscarTarefasPorUsuarioId/{usuarioId}")]
+        public async Task<ActionResult<PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>>> BuscarTarefasPorUsuarioId(
+            [FromRoute] int usuarioId, [FromQuery] int numeroPagina = 1, [FromQuery] int totalItens = 10)
+        {
+            int idUsuarioToken = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            string direitoUsuarioToken = User.FindFirst(ClaimTypes.Role)?.Value;
+            ValidaAcessoRota.ValidarAcessoRota(idUsuarioToken, usuarioId, direitoUsuarioToken, true);
+
+            var resposta = await _orquestrador.BuscarTarefasPorUsuarioId(usuarioId, numeroPagina, totalItens);
+            if (resposta.Dados is null || !resposta.Dados.Itens.Any())
+                return NoContent();
+
+            return Ok(resposta);
+        }
     }
 }

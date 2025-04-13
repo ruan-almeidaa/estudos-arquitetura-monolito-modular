@@ -59,6 +59,25 @@ namespace ModuloTarefa.Dominio.Servicos
                 .CriarResposta<TarefaDetalhadaDto>(tarefaDetalhadaDto, Mensagens.Tarefa.TarefasEncontradas, System.Net.HttpStatusCode.OK);
         }
 
+        public async Task<PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>> BuscarTarefasPorUsuarioId(int usuarioId, int numeroPagina, int totalItens)
+        {
+            UsuarioDetalhadoDto usuarioTarefa = await _usuarioHttpClient.BuscarUsuarioPorId(usuarioId);// Caso Usuario não exista, vai lançar uma exceção
+
+            List<Tarefa> tarefas = await _tarefaServ.BuscarTarefasPorUsuarioId(usuarioId, numeroPagina, totalItens);
+            int totalTarefas = await _tarefaServ.ContarTarefas();
+            List<TarefaDetalhadaDto> tarefaDetalhadaDtos =
+                (await Task.WhenAll(
+                    tarefas.Select(t => _tarefaServ.ConverteParaDetalhada(t)))).ToList();
+            return PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>
+                .CriarResposta<Paginacao<TarefaDetalhadaDto>>(new Paginacao<TarefaDetalhadaDto>
+                {
+                    Itens = tarefaDetalhadaDtos,
+                    TotalItensParaExibir = totalTarefas,
+                    NumeroPaginaAtual = numeroPagina,
+                    TotalPaginasParaExibir = (int)Math.Ceiling((double)totalTarefas / totalItens)
+                }, Mensagens.Tarefa.TarefasEncontradas, System.Net.HttpStatusCode.OK);
+        }
+
         public async Task<PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>> BuscarTodasTarefas(int numeroPagina, int totalItens)
         {
             List<Tarefa> tarefas = await _tarefaServ.BuscarTodasTarefas(numeroPagina, totalItens);

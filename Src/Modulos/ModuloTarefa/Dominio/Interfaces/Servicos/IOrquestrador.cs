@@ -17,5 +17,6 @@ namespace ModuloTarefa.Dominio.Interfaces.Servicos
         Task<PadraoRespostasApi<bool>> ExcluirTarefa(int idTarefa);
         Task<PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>> BuscarTodasTarefas(int numeroPagina, int totalItens);
         Task<PadraoRespostasApi<TarefaDetalhadaDto>> BuscarTarefaPorId(int idTarefa);
+        Task<PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>> BuscarTarefasPorUsuarioId(int usuarioId, int numeroPagina, int totalItens);
     }
 }
