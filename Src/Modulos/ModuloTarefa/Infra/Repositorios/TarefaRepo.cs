@@ -33,6 +33,17 @@ namespace ModuloTarefa.Infra.Repositorios
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
+        public async Task<List<Tarefa>> BuscarTarefasPorUsuarioId(int usuarioId, int numeroPagina, int totalItens)
+        {
+            return await _contexto.Tarefas
+                .AsNoTracking()
+                .Where(t => t.UsuarioId == usuarioId)
+                .OrderBy(t => t.Id)
+                .Skip((numeroPagina - 1) * totalItens) // Pula os registros das páginas anteriores
+                .Take(totalItens) // Pega apenas os registros da página atual
+                .ToListAsync();
+        }
+
         public async Task<List<Tarefa>> BuscarTodasTarefas(int numeroPagina, int totalItens)
         {
             return await _contexto.Tarefas

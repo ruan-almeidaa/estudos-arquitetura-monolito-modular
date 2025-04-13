@@ -16,5 +16,6 @@ namespace ModuloTarefa.Dominio.Interfaces.Repositorios
         Task<List<Tarefa>> BuscarTodasTarefas(int numeroPagina, int totalItens);
         Task<int> ContarTarefas();
         Task<Tarefa> AtualizarStatusTarefa(Tarefa tarefa);
+        Task<List<Tarefa>> BuscarTarefasPorUsuarioId(int usuarioId, int numeroPagina, int totalItens);
     }
 }
