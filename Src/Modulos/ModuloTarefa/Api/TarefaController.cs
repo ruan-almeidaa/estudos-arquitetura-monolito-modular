@@ -51,7 +51,11 @@ namespace ModuloTarefa.Api
         [Authorize(Roles = "Administrador")]
         public async Task<ActionResult<PadraoRespostasApi<Paginacao<TarefaDetalhadaDto>>>> BuscarTodasTarefas([FromQuery] int numeroPagina = 1, [FromQuery] int totalItens = 10)
         {
-            return await _orquestrador.BuscarTodasTarefas(numeroPagina, totalItens);
+            var resposta = await _orquestrador.BuscarTodasTarefas(numeroPagina, totalItens);
+            if (resposta.Dados is null || !resposta.Dados.Itens.Any())
+                return NoContent();
+
+            return Ok(resposta);
         }
         [HttpGet("BuscarTarefaPorId/{idTarefa}")]
         public async Task<ActionResult<PadraoRespostasApi<TarefaDetalhadaDto>>> BuscarTarefaPorId([FromRoute] int idTarefa)
