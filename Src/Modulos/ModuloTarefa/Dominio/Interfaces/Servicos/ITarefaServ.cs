@@ -20,5 +20,6 @@ namespace ModuloTarefa.Dominio.Interfaces.Servicos
         Task<Tarefa> AtualizarStatustarefa(TarefaAtualizarStatusDto tarefaAtualizarStatusDto);
         Task<Tarefa> ConcluirTarefa(Tarefa tarefa);
         Task<TarefaDetalhadaDto> ConverteParaDetalhada(Tarefa tarefa);
+        Task<List<Tarefa>> BuscarTarefasPorUsuarioId(int usuarioId, int numeroPagina, int totalItens);
     }
 }

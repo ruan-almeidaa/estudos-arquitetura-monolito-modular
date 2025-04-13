@@ -45,6 +45,11 @@ namespace ModuloTarefa.Dominio.Servicos
             return await _tarefaRepo.BuscarTarefaPorId(id);
         }
 
+        public async Task<List<Tarefa>> BuscarTarefasPorUsuarioId(int usuarioId, int numeroPagina, int totalItens)
+        {
+            return await _tarefaRepo.BuscarTarefasPorUsuarioId(usuarioId, numeroPagina, totalItens);
+        }
+
         public async Task<List<Tarefa>> BuscarTodasTarefas(int numeroPagina, int totalItens)
         {
             return await _tarefaRepo.BuscarTodasTarefas(numeroPagina, totalItens);
